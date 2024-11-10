@@ -36,7 +36,7 @@ import Hinza from '@/assets/Img/hinza.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-
+import NewsComponent  from '@/components/googlenews/news_old';
 export default function HinzaAsif() {
   const { t, changeLocale } = useLocalization(LANG);
   const [hideMyContent, setHideMyContent] = useState(true);
@@ -304,7 +304,9 @@ export default function HinzaAsif() {
                             )}
                           </p>
                         </div>
-
+                      <div className='row'>
+                        <NewsComponent />
+                      </div>
                         <div
                           id='Experienced-Media-Business-Growth-Partnership'
                           className='ww-width'
