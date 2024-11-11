@@ -22,17 +22,17 @@ const LinkndindataComponent = () => {
   useEffect(() => {
     // Extract directoryId from URL
     if (typeof window !== "undefined") {
-   {/* const pathname = window.location.pathname;
+     const pathname = window.location.pathname;
       console.log("Initial pathname:", pathname);
     
       const pathSegments = pathname.split('/').filter(segment => segment);
       const id = pathSegments[pathSegments.length - 1] || null;
     
       console.log("Extracted directoryId from URL:", id);
-      setDirectoryId(id); */}
-      const params = new URLSearchParams(window.location.search);
+      setDirectoryId(id); 
+     { /*const params = new URLSearchParams(window.location.search);
       const id = params.get('directoryId');
-      setDirectoryId(id);
+      setDirectoryId(id);*/}
     }
     
 
@@ -75,11 +75,9 @@ const LinkndindataComponent = () => {
         {articles.map((article, index) => (
           <div key={index} className="col-md-6 mb-4">
             <div className="shadow-txt-pnl p-3 rounded">
-              <p>
-                <i>
-                  {article.name}, {article.designation}
-                </i>
-              </p>
+            <h6 className="m-0"><b>{article.name}</b></h6>
+            <p className="m-0">{article.designation}</p>
+              
               <div className="d-flex align-items-center">
                 <div className="img-pnl radius">
                   <img

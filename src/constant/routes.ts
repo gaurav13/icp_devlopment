@@ -98,7 +98,7 @@ export const ALL_QUIZ_ROUTE_ADMIN = '/super-admin/manage-quiz/';
 export const MANAGE_SURVEY_ADMIN = "/super-admin/manage-survey/"
 export const USER_ACTIVITES_DASHBOARD = "/super-admin/user-activities/"
 export const token_claims_page = "/super-admin/claims-requests/"
-
+export const ai_assistance = "/ai-assistance/"
 
 export const SURVEY = "/take-survey";
 export const BLOCKED = "/blocked";

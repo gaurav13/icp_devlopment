@@ -31,6 +31,7 @@ import {
   QUIZ,
   QUIZ_ROUTE,
   TERMSOFUSE,
+  ai_assistance,
 } from '@/constant/routes';
 import ScrollToTopbtn from '@/components/ScrollToTopBtn/ScrollToTopbtn';
 
@@ -430,7 +431,7 @@ let openLinkfn=(l:string)=>{
                     <Image src={mobile3} alt='Mobile' />
                   </div>
                 </li>
-                <li onClick={()=>openLinkfn(QUIZ_ROUTE)}>
+                <li onClick={()=>openLinkfn(ai_assistance)}>
                   <Image src={mobile4} alt='Mobile' />
                   <p>{t('earn')}</p>
                 </li>

@@ -47,7 +47,7 @@ import EntriesSlider from '@/components/ArticlesList/ArticleSlider';
 import EventSlider from '@/components/EventSlider/EventSlider';
 import { TopEvent } from '@/types/article';
 import MarketSentimentChart  from '@/components/test/LineChart';
-import NewsComponent  from '@/components/googlenews/news_old';
+import NewsComponent  from '@/components/googlenews/news';
 import LinkndindataComponent  from '@/components/linkendindata/linkndindata';
 export default function Web3DirectoryDetail({
   directoryId,
@@ -770,7 +770,7 @@ export default function Web3DirectoryDetail({
         <MarketSentimentChart />
         </div>
         <div className="col-md-6">
-        <NewsComponent />
+       {/* <NewsComponent /> */}
         </div>
       </div>
       

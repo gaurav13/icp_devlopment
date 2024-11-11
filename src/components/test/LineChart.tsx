@@ -1,41 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions, TooltipItem, Chart } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions, Chart } from 'chart.js';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const customLabelPlugin = {
-  id: 'customLabelPlugin',
-  beforeDraw: (chart: Chart) => {
-    const { width, height, ctx } = chart;
-    ctx.restore();
-    const fontSize = '16px';
-    ctx.font = `${fontSize} sans-serif`;
-    ctx.textBaseline = "middle";
-    ctx.textAlign = 'center';
-
-    const labels = ['Positive', 'Neutral', 'Negative'];
-    const chartData = chart.data.datasets[0].data as number[];
-    const colors = ['rgba(0, 200, 150, 1)', 'rgba(255, 165, 0, 1)', 'rgba(255, 99, 132, 1)'];
-
-    labels.forEach((label, i) => {
-      ctx.fillStyle = colors[i];
-      ctx.fillText(
-        `${label} ${chartData[i]}%`,
-        width / 2,  // Center align horizontally
-        height / 2 - 30 + i * 20 // Center align vertically with adjusted spacing
-      );
-    });
-    ctx.save();
-  }
-};
 
 
-ChartJS.register(customLabelPlugin);
 
 const MarketSentimentChart = () => {
   const [chartData, setChartData] = useState<number[]>([]);
@@ -72,31 +46,21 @@ const MarketSentimentChart = () => {
     if (directoryId) fetchData();
   }, [pathname, directoryId]);
 
-  // Return null if there is no data available to render
   if (!isDataAvailable) return null;
 
   const data = {
-    labels: ['Positive', 'Neutral', 'Negative'],
+    labels: ['Organic', 'Sponsored', 'Press Release'],
     datasets: [
       {
         data: chartData,
-        backgroundColor: [
-          '#1a6eed',
-          '#eaca08',
-          '#d92424',
-        ],
-        borderColor: [
-          'rgba(0, 200, 150, 1)',
-          'rgba(255, 165, 0, 1)',
-          'rgba(255, 99, 132, 1)',
-        ],
-        borderWidth: 2,
-        cutout: '70%',
+        backgroundColor: ['#1a6eed', '#eaca08', '#d92424'],
+        borderColor: ['#1a6eed', '#eaca08', '#d92424'],
+        borderWidth: 1,
       },
     ],
   };
 
-  const options: ChartOptions<'doughnut'> = {
+  const options: ChartOptions<'pie'> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -106,7 +70,7 @@ const MarketSentimentChart = () => {
       tooltip: {
         enabled: true,
         callbacks: {
-          label: (tooltipItem: TooltipItem<'doughnut'>) => {
+          label: (tooltipItem) => {
             return `${tooltipItem.label}: ${tooltipItem.raw}%`;
           },
         },
@@ -117,13 +81,30 @@ const MarketSentimentChart = () => {
   return (
     <div>
       <div style={{ textAlign: 'center' }}>
-      <h2 className="mb-4">Market Sentiment</h2>
-      <h3>Media Coverage: 68 Platforms</h3>
-    </div>
+        <h2 className="mb-4">Market Sentiment</h2>
+        <h3>Media Coverage: 68 Platforms</h3>
+      </div>
+
+      {/* Custom Legend */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '20px', height: '20px', backgroundColor: '#1a6eed', marginRight: '8px' }}></div>
+          <span>Organic</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '20px', height: '20px', backgroundColor: '#eaca08', marginRight: '8px' }}></div>
+          <span>Sponsored</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ width: '20px', height: '20px', backgroundColor: '#d92424', marginRight: '8px' }}></div>
+          <span>Press Release</span>
+        </div>
+      </div>
+
       <div className="row align-items-center justify-content-center">
-        <div className="col-md-6" style={{ maxWidth: '300px' }}>
+        <div className="col-md-12" style={{ maxWidth: '300px' }}>
           <div style={{ position: 'relative', height: '300px' }}>
-            <Doughnut data={data} options={options} />
+            <Pie data={data} options={options} />
           </div>
         </div>
       </div>
