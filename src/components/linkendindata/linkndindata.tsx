@@ -9,6 +9,7 @@ type Article = {
   name: string;
   designation: string;
   profile_link: string;
+  twitter:string;
   email: string;
   profile_image: string;
 };
@@ -102,14 +103,27 @@ const LinkndindataComponent = () => {
                     >
                       <FaEnvelope />
                     </a>
-                    <a
-                      href={article.profile_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-dark"
-                    >
-                      <FaLinkedin />
-                    </a>
+                                          {article.profile_link ? (
+                          <a
+                            href={article.profile_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="me-2 text-dark"
+                          >
+                            <FaLinkedin />
+                          </a>
+                        ) : null}
+                        {article.twitter ? (
+                        <a
+                          href={article.twitter}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="me-2 text-dark"
+                        >
+                         <i className='fa fa-twitter' />
+                        </a>
+                      ) : null}
+
                   </div>
                 </div>
               </div>
