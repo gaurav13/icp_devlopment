@@ -17,17 +17,17 @@ const MarketSentimentChart = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const pathname = window.location.pathname;
+      {/*const pathname = window.location.pathname;
        console.log("Initial pathname:", pathname);
      
        const pathSegments = pathname.split('/').filter(segment => segment);
        const id = pathSegments[pathSegments.length - 1] || null;
      
        console.log("Extracted directoryId from URL:", id);
-       setDirectoryId(id); 
-      { /*const params = new URLSearchParams(window.location.search);
+       setDirectoryId(id); */}
+      const params = new URLSearchParams(window.location.search);
        const id = params.get('directoryId');
-       setDirectoryId(id);*/}
+       setDirectoryId(id);
      }
 
     const fetchData = async () => {
@@ -137,7 +137,7 @@ const MarketSentimentChart = () => {
 
       <div className="row align-items-center justify-content-center">
         <div className="col-md-12" style={{ maxWidth: '300px' }}>
-          <div style={{ position: 'relative', height: '300px' }}>
+          <div style={{ position: 'relative', height: '250px' }}>
             <Pie data={data} options={options} />
           </div>
         </div>

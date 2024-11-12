@@ -20,13 +20,16 @@ const NewsComponent = () => {
   // Extract directoryId from the URL
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const pathname = window.location.pathname;
+     {/* const pathname = window.location.pathname;
       console.log("Initial pathname:", pathname);
 
       const pathSegments = pathname.split('/').filter(segment => segment);
       const id = pathSegments[pathSegments.length - 1] || null;
 
       console.log("Extracted directoryId from URL:", id);
+      setDirectoryId(id);*/}
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('directoryId');
       setDirectoryId(id);
     }
   }, []);
@@ -79,14 +82,14 @@ const NewsComponent = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4">Latest Newsss</h2>
+      <h2 className="mb-1">Latest News <span className="float-end">Weekly Updates</span></h2>
       <div className="row">
         {error ? (
           <p className="text-center text-danger">{error}</p>
         ) : (
           articles.map((article, index) => (
-            <div key={index} className="col-md-12 mb-4">
-              <div className="news-item border rounded p-3 d-flex align-items-start">
+            <div key={index} className="col-md-12 mb-1">
+              <div className="news-item border rounded p-3 d-flex align-items-start"  style={{ padding: '0.7rem' }}>
                 <img
                   className='img-fluid rounded mr-3'
                   src={article.image || 'https://via.placeholder.com/150'}

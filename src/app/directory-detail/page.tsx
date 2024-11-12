@@ -2,7 +2,7 @@
 import React from 'react';
 import useSearchParamsHook from '@/components/utils/searchParamsHook';
 import Web3DirectoryDetail from '@/components/Web3DirectoryDetail/Web3DirectoryDetail';
-import MarketSentimentChart  from '@/components/test/LineChart';
+import MarketSentimentChart  from '@/components/MediaGraph/LineChart';
 export default function DirectoryPG() {
   const urlparama = useSearchParamsHook();
   const searchParams = new URLSearchParams(urlparama);

@@ -46,7 +46,7 @@ import TopEventsSlider from '@/components/EntryListNewHome/EventSliderHome';
 import EntriesSlider from '@/components/ArticlesList/ArticleSlider';
 import EventSlider from '@/components/EventSlider/EventSlider';
 import { TopEvent } from '@/types/article';
-import MarketSentimentChart  from '@/components/test/LineChart';
+import MarketSentimentChart  from '@/components/MediaGraph/LineChart';
 import NewsComponent  from '@/components/googlenews/news';
 import LinkndindataComponent  from '@/components/linkendindata/linkndindata';
 export default function Web3DirectoryDetail({
@@ -764,17 +764,7 @@ export default function Web3DirectoryDetail({
                   </div>
                   {!isLoading && (
                     <div className='right-detail-pnl pr'>
-                                       <div className="container">
-      <div className="row">
-        <div className="col-md-6 shadow-txt-pnl">
-        <MarketSentimentChart />
-        </div>
-        <div className="col-md-6">
-       {/* <NewsComponent /> */}
-        </div>
-      </div>
-      
-    </div>
+                                      
                       <h3>
                         <Image src={bard} alt='Bard' /> {t('Company Detail')}
                       </h3>
@@ -786,6 +776,17 @@ export default function Web3DirectoryDetail({
                             ? parse(directory[0].companyDetail ?? '')
                             : ''}
                         </p>
+                        <div className="container">
+                                       <div className="row">
+                             <div className="col-md-5">
+                         <MarketSentimentChart />
+                       </div>
+                    <div className="col-md-7">
+                 <NewsComponent /> 
+                     </div>
+                 </div>
+      
+    </div>
                       </div>
                       <div className='full-div'>
                         <div className='shadow-txt-pnl'>

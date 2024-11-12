@@ -18,7 +18,7 @@ import map from '@/assets/Img/Icons/icon-map.png';
 import icondelivery from '@/assets/Img/Icons/icon-delivery.png';
 import iconmail from '@/assets/Img/Icons/icon-attach.png';
 import iconcall from '@/assets/Img/Icons/icon-call.png';
-import MarketSentimentChart  from '@/components/test/LineChart';
+import MarketSentimentChart  from '@/components/MediaGraph/LineChart';
 import NewsComponent  from '@/components/googlenews/news';
 import LinkndindataComponent  from '@/components/linkendindata/linkndindata';
 import logger from '@/lib/logger';
