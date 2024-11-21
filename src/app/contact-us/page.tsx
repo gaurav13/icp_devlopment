@@ -97,6 +97,19 @@ export default function ContactUs() {
      }, [])
   return (
     <>
+   {/* Scoped CSS */}
+   <style jsx>{`
+        .market-sentiment-chart:empty + .news-column {
+          flex: 0 0 100%;
+          max-width: 100%; /* Make it take full width */
+        }
+        .market-sentiment-chart:empty {
+          display: none; /* Hide the first column if empty */
+        }
+        .news-column {
+          transition: all 0.3s ease; /* Optional: Add a smooth transition effect */
+        }
+      `}</style>
       <main id='main'>
         <div className='main-inner detail-inner-Pages pri-term-pnl'>
           <div className='inner-content'>
@@ -145,10 +158,10 @@ export default function ContactUs() {
                       <div className='right-detail-pnl'>
                       <div className="container">
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-6 market-sentiment-chart">
         <MarketSentimentChart />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6 news-column">
         <NewsComponent />
         </div>
       </div>

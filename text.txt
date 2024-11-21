@@ -1,0 +1,10 @@
+start "dfx start"
+deploy  canister
+- npm run genploy --canister=entry
+
+
+make controller of canister
+dfx canister  update-settings canister_name --add-controller=canister id
+
+command to give super-admin access
+dfx canister call user make_admin '((principal "g73hs-5qwca-p4di3-cmoth-kqtvj-hquul-eyms6-rmhnn-ehiby-2xx63-wqe"),variant{admin})'

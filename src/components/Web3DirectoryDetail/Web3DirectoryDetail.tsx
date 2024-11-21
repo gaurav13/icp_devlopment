@@ -49,6 +49,7 @@ import { TopEvent } from '@/types/article';
 import MarketSentimentChart  from '@/components/MediaGraph/LineChart';
 import NewsComponent  from '@/components/googlenews/news';
 import LinkndindataComponent  from '@/components/linkendindata/linkndindata';
+import DirectoryModelPopup from '@/components/DirectoryModelPopup/DirectoryModelPopup';
 export default function Web3DirectoryDetail({
   directoryId,
 }: {
@@ -66,7 +67,10 @@ export default function Web3DirectoryDetail({
   const [isLoading, setIsLoading] = useState(true);
   const location = usePathname();
   const [topEvents, setTopEvents] = useState<null | TopEvent[]>();
+  const [showContactModal, setShowContactModal] = useState(false);
 
+  const handleShowContactModal = () => setShowContactModal(true);
+  const handleCloseContactModal = () => setShowContactModal(false);
   const { auth, setAuth, identity, userAuth } = useConnectPlugWalletStore(
     (state) => ({
       auth: state.auth,
@@ -348,6 +352,21 @@ export default function Web3DirectoryDetail({
      }, [])
   return (
     <>
+       <style jsx>{`
+        .market-sentiment-chart:empty + .news-column {
+          flex: 0 0 100%;
+          max-width: 100%; /* Make it take full width */
+        }
+        .market-sentiment-chart:empty {
+          display: none; /* Hide the first column if empty */
+        }
+        .news-column {
+          transition: all 0.3s ease; /* Optional: Add a smooth transition effect */
+        }
+          @media (max-width: 576px) {
+        .left-side-pnl{display:none}
+        }
+      `}</style>
       <main id='main'>
         <ins
           className='adsbygoogle'
@@ -433,16 +452,7 @@ export default function Web3DirectoryDetail({
                                 ? directory[0].company
                                 : ''}
                             </h1>
-                            <strong>
-                              {directory.length != 0
-                                ? directory[0].companyUrl[0].length > 30
-                                  ? `${directory[0].companyUrl[0].slice(
-                                      0,
-                                      30
-                                    )}...`
-                                  : directory[0].companyUrl[0]
-                                : ''}
-                            </strong>
+                            
                           </div>
                         </div>
                         <ul className='inline-list'>
@@ -624,26 +634,39 @@ export default function Web3DirectoryDetail({
                           ) : (
                             ''
                           )}
+                              {directory.length != 0 ? (
+                            directory[0].companyUrl[0].length != 0 ? (
+                              <li>
+                                <Link href={directory[0].companyUrl[0]}>
+                                  <i className='fa fa-globe' />
+                                </Link>
+                              </li>
+                            ) : (
+                              ''
+                            )
+                          ) : (
+                            ''
+                          )}
+                           
                         </ul>
                         <ul className='directoryBtn'>
                           {directory.length != 0 ? (
                             directory[0].companyUrl[0].length != 0 ? (
                               <>
-                              <li className='me-3'>
-                                <Link
-                                  className='reg-btn small yellow dark'
-                                  href={directory[0].companyUrl[0]}
-                                >
-                                  {t('Visit Website')}{' '}
-                                </Link>
-                              </li>
+                              
                               <li>
                                   <Link
-                                  className='reg-btn small yellow dark'
-                               href="/contact-us"
-                                >
-                                  {t('Contact')}{' '}
-                                </Link>
+              href="#"
+              className="reg-btn small yellow dark"
+              onClick={(e) => {
+                e.preventDefault();
+                handleShowContactModal();
+              }}
+            >
+               {t('Contact')}{' '}
+            </Link>
+            <DirectoryModelPopup show={showContactModal} handleClose={handleCloseContactModal} />
+
                           
                               </li>
                               </>
@@ -668,13 +691,9 @@ export default function Web3DirectoryDetail({
                       </div> */}
                     </Col>
                     <Col xxl='4' xl='5' lg='6' md='8'>
-                      <div className='img-box-pnl'>
+                    <div className='img-box-pnl'>
                         <Image
-                          src={
-                            directory.length != 0
-                              ? directory[0]?.companyBanner
-                              : bg
-                          }
+                          src={ directory[0]?.companyBanner }
                           alt='founder image'
                           height={100}
                           width={100}
@@ -778,25 +797,26 @@ export default function Web3DirectoryDetail({
                         </p>
                         <div className="container">
                                        <div className="row">
-                             <div className="col-md-5">
-                         <MarketSentimentChart />
-                       </div>
-                    <div className="col-md-7">
-                 <NewsComponent /> 
-                     </div>
+         <div className="col-md-6 market-sentiment-chart">
+        <MarketSentimentChart />
+        </div>
+        <div className="col-md-6 news-column mt-3">
+        <NewsComponent />
+        </div>
                  </div>
       
-    </div>
+         </div>
                       </div>
                       <div className='full-div'>
-                        <div className='shadow-txt-pnl'>
-                          <p>
-                            <i>
-                              {directory.length != 0
-                                ? directory[0].founderDetail
-                                : ''}
-                            </i>
-                          </p>
+                        <div className='shadow-txt-pnl '>
+                        <div>
+  <p>
+    <i>
+      {directory.length !== 0 ? directory[0].founderDetail : ''}
+    </i>
+  </p>
+</div>
+
                           <div className='d-flex'>
                             <div className='img-pnl radius'>
                               {/* <Image src={usericon} alt='Infinity' /> */}

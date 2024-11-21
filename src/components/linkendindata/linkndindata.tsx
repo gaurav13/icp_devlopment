@@ -9,9 +9,9 @@ type Article = {
   name: string;
   designation: string;
   profile_link: string;
-  twitter:string;
   email: string;
   profile_image: string;
+  twitter:string;
 };
 
 const LinkndindataComponent = () => {
@@ -23,17 +23,17 @@ const LinkndindataComponent = () => {
   useEffect(() => {
     // Extract directoryId from URL
     if (typeof window !== "undefined") {
-    {/* const pathname = window.location.pathname;
+     const pathname = window.location.pathname;
       console.log("Initial pathname:", pathname);
     
       const pathSegments = pathname.split('/').filter(segment => segment);
       const id = pathSegments[pathSegments.length - 1] || null;
     
       console.log("Extracted directoryId from URL:", id);
-      setDirectoryId(id); */}
-     const params = new URLSearchParams(window.location.search);
+      setDirectoryId(id); 
+     { /*const params = new URLSearchParams(window.location.search);
       const id = params.get('directoryId');
-      setDirectoryId(id);
+      setDirectoryId(id);*/}
     }
     
 
@@ -95,36 +95,35 @@ const LinkndindataComponent = () => {
                   {/*<h6 className="m-0"><b>{article.name}</b></h6>
                   <p className="m-0">{article.designation}</p>*/}
                   <div className="d-flex mt-2">
-                    <a
-                      href="https://blockza.io/about/advertise-with-us/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="me-2 text-dark"
-                    >
-                      <FaEnvelope />
-                    </a>
-                                          {article.profile_link ? (
-                          <a
-                            href={article.profile_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="me-2 text-dark"
-                          >
-                            <FaLinkedin />
-                          </a>
-                        ) : null}
-                        {article.twitter ? (
-                        <a
-                          href={article.twitter}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="me-2 text-dark"
-                        >
-                         <i className='fa fa-twitter' />
-                        </a>
-                      ) : null}
-
-                  </div>
+    <a
+      href="https://blockza.io/about/advertise-with-us/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="me-2 text-dark"
+    >
+      <FaEnvelope />
+    </a>
+    {article.profile_link && (
+      <a
+        href={article.profile_link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-dark me-2"
+      >
+        <FaLinkedin />
+      </a>
+    )}
+    {article.twitter && (
+      <a
+        href={article.twitter}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-dark"
+      >
+         <i className="fab fa-twitter"></i> {/* Twitter Icon */}
+      </a>
+    )}
+  </div>
                 </div>
               </div>
             </div>

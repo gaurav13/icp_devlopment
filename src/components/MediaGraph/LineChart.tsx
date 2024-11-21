@@ -5,7 +5,7 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions } from 'chart.js';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
-
+import { LANG } from '@/constant/language';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const MarketSentimentChart = () => {
@@ -17,17 +17,17 @@ const MarketSentimentChart = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      {/*const pathname = window.location.pathname;
+      const pathname = window.location.pathname;
        console.log("Initial pathname:", pathname);
      
        const pathSegments = pathname.split('/').filter(segment => segment);
        const id = pathSegments[pathSegments.length - 1] || null;
      
        console.log("Extracted directoryId from URL:", id);
-       setDirectoryId(id); */}
-      const params = new URLSearchParams(window.location.search);
+       setDirectoryId(id); 
+     {/* const params = new URLSearchParams(window.location.search);
        const id = params.get('directoryId');
-       setDirectoryId(id);
+       setDirectoryId(id);*/}
      }
 
     const fetchData = async () => {
@@ -64,8 +64,8 @@ const MarketSentimentChart = () => {
     datasets: [
       {
         data: chartData,
-        backgroundColor: ['#1a6eed', '#eaca08', '#d92424'],
-        borderColor: ['#1a6eed', '#eaca08', '#d92424'],
+        backgroundColor: ['#81c2af', '#f47a83', '#84caff'],
+        borderColor: ['#81c2af', '#f47a83', '#84caff'],
         borderWidth: 1,
       },
     ],
@@ -92,22 +92,29 @@ const MarketSentimentChart = () => {
     return ;
   }
   return (
-    <div className='shadow-txt-pnl'>
+    <div>
       <div style={{ textAlign: 'center' }}>
-        <h2 className="mb-1">Media Exposure Summary</h2>
-        <p style={{ marginBottom: '0px' }}>Media Coverage: {mediaCoverage} Platforms</p>
+      <h2 className="mb-1">
+        {LANG === 'jp' ? "メディア露出の概要" : "Media Exposure Summary"}
+      </h2>
+      <p style={{ marginBottom: '0px' }}>
+        {LANG === 'jp' 
+          ? `メディア報道: ${mediaCoverage} プラットフォーム` 
+          : `Media Coverage: ${mediaCoverage} Platforms`}
+      </p>
       </div>
 
       {/* Custom Legend */}
+      <div  className='shadow-txt-pnl'>
       <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', fontSize: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ 
             width: '20px', 
             height: '20px', 
-            backgroundColor: '#1a6eed', 
+            backgroundColor: '#81c2af', 
             marginRight: '8px', 
-            borderRadius: '50%',
-            border: '1px solid black'
+            borderRadius: '50%'
+          
           }}></div>
           <strong>Organic</strong>
         </div>
@@ -115,10 +122,9 @@ const MarketSentimentChart = () => {
           <div style={{ 
             width: '20px', 
             height: '20px', 
-            backgroundColor: '#eaca08', 
+            backgroundColor: '#f47a83', 
             marginRight: '8px', 
-            borderRadius: '50%',
-            border: '1px solid black'
+            borderRadius: '50%'
           }}></div>
           <strong>Sponsored</strong>
         </div>
@@ -126,10 +132,9 @@ const MarketSentimentChart = () => {
           <div style={{ 
             width: '20px', 
             height: '20px', 
-            backgroundColor: '#d92424', 
+            backgroundColor: '#84caff', 
             marginRight: '8px', 
-            borderRadius: '50%',
-            border: '1px solid black'
+            borderRadius: '50%'
           }}></div>
           <strong>Press Release</strong>
         </div>
@@ -141,7 +146,7 @@ const MarketSentimentChart = () => {
             <Pie data={data} options={options} />
           </div>
         </div>
-      </div>
+      </div></div>
     </div>
   );
 };
