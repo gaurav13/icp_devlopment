@@ -39,15 +39,7 @@ export const metadata: Metadata = {
     images: [`${siteConfig.url}/images/og.jpg`],
     creator: '@BlockZa',
   },
-
-  // authors: [
-  //   {
-  //     name: 'Actual Author Name',
-  //     url: 'https://actualauthorurl.com/',
-  //   },
-  // ],
 };
-
 
 import { ToastContainer } from 'react-toastify';
 import Footer from '@/components/Footer/Footer';
@@ -55,6 +47,7 @@ import NavBarNew from '@/components/NavBar/NavabrNew';
 import NewSidebarHome from '@/components/SideBarHome/NewSideBarHome';
 import { LANG, LanguageForSchema } from '@/constant/language';
 import MainLayoutScript from '@/components/Scripts/MainLayoutScript';
+
 export default function RootLayout({
   children,
   hide,
@@ -64,100 +57,78 @@ export default function RootLayout({
 }) {
   return (
     <html lang={LANG === 'en' ? 'en' : 'ja-JP'}>
-      {/* <Head> */}
       <head>
-        
         <link
           href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
           rel='stylesheet'
         />
 
+        {/* Google Analytics for JP and EN */}
+        {LANG === 'en' ? (
+          <>
+            <script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-S2B0KX9703"
+            ></script>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-S2B0KX9703');
+                `,
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-LR6B5RN1Q6"
+            ></script>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-LR6B5RN1Q6');
+                  gtag('config', 'AW-16488843189'); // Google Ads Conversion ID for JP
+                `,
+              }}
+            />
+              
+          </>
+        )}
 
-        {/* <link
-          href='https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700&family=Literata:opsz,wght@7..72,300;7..72,400;7..72,500;7..72,600;7..72,700;7..72,800&display=swap'
-          rel='stylesheet'
-        /> */}
-        {/* <script src='http://localhost:8097'/> */}
-        {/* Google tag (gtag.js) */}
-        {/* <!-- Google tag (gtag.js) --> */}
-         
-
-     
-
-     
-
-    
+        {/* Other head elements */}
       </head>
-      {/* </Head> */}
-      <body className={`${LANG == 'jp' ? 'ENStyle' : ''}`}>
-       
-      
-
+      <body className={`${LANG === 'jp' ? 'ENStyle' : ''}`}>
         <NewSidebarHome />
         <NavBarNew />
         {children}
         <Footer />
         <ToastContainer theme='light' autoClose={3000} />
 
-
-
-      {LANG=="en"?<script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-5FJ6DN4R');`,
-          }}
-        />:  <script
-        dangerouslySetInnerHTML={{
-          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-K6TFQL22');`,
-        }}
-      />}
-
-  <noscript><iframe src={LANG=="en"?"https://www.googletagmanager.com/ns.html?id=GTM-5FJ6DN4R":"https://www.googletagmanager.com/ns.html?id=GTM-K6TFQL22"}
-height="0" width="0" style={{display:'none',visibility:"hidden"}}></iframe></noscript>
-
-        <script
-          src='https://kit.fontawesome.com/b4b056bd78.js'
-          crossOrigin='anonymous'
-        />
-           {LANG=="en"?<script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.embeddedChatbotConfig = {
-                chatbotId: "vXOyMigraOFfiJ7f5O1Il",
-                domain: "www.chatbase.co"
-              };
-            `,
-          }}
-        />:<script
-        dangerouslySetInnerHTML={{
-          __html: `
-               window.embeddedChatbotConfig = {
-        chatbotId: "384SXpy6Uf9FJnTpRTgef",
-        domain: "www.chatbase.co"
-        }
-          `,
-        }}
-      />}
         {/* Embedded Chatbot Script */}
-        {LANG=="en"?<script
-          src="https://www.chatbase.co/embed.min.js"
-          defer
-          chatbotId="vXOyMigraOFfiJ7f5O1Il"
-          domain="www.chatbase.co"
-        ></script>:
-        <script
-        src="https://www.chatbase.co/embed.min.js"
-        chatbotId="384SXpy6Uf9FJnTpRTgef"
-        domain="www.chatbase.co"
-        defer>
-        </script>}
+        {LANG === 'en' ? (
+          <script
+            src="https://www.chatbase.co/embed.min.js"
+            defer
+            chatbotId="vXOyMigraOFfiJ7f5O1Il"
+            domain="www.chatbase.co"
+          ></script>
+        ) : (
+          <script
+            src="https://www.chatbase.co/embed.min.js"
+            defer
+            chatbotId="384SXpy6Uf9FJnTpRTgef"
+            domain="www.chatbase.co"
+          ></script>
+        )}
+        
+    
       </body>
     </html>
   );

@@ -44,7 +44,6 @@ import {
 } from '@/constant/routes';
 import ReactPaginate from 'react-paginate';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import '../../styles/Blockchain.module.css';
 let CATEGORY_ENTRIES_PERPAGE = 20;
 
 

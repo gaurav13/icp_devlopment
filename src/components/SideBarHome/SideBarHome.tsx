@@ -156,7 +156,7 @@ export default function SidebarHome() {
           ref={sidebarRef as React.RefObject<HTMLDivElement>}
           className={toggle ? 'sidebar-home active' : 'sidebar-home'}
         >
-          <div className='sidebar-inner side1'>
+          <div className='sidebar-inner'>
             <button className='toggler' onClick={toggleHandle}>
               <p className='m-0'>
                 <span />

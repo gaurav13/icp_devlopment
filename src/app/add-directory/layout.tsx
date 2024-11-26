@@ -4,19 +4,19 @@ import logger from '@/lib/logger';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: siteConfig.contactusTitle,
-  description: siteConfig.contactusDesc,
+  title: siteConfig.adddirectorytitle,
+  description: siteConfig.adddirectorydesc,
   twitter: {
     card: 'summary_large_image',
-    title: siteConfig.twitterTitle,
-    description: siteConfig.contactusDesc,
+    title: siteConfig.adddirectorytitle,
+    description: siteConfig.adddirectorydesc,
     images: [`${siteConfig.url}/images/contact-us.png`],
     creator: siteConfig.twitterCreator,
   },
   openGraph: {
-    url: `${siteConfig.url+CONTACT_US}`,
-    title: siteConfig.twitterTitle,
-    description: siteConfig.contactusDesc,
+    url: `${siteConfig.url}/add-directory/`,
+    title: siteConfig.adddirectorytitle,
+    description: siteConfig.adddirectorydesc,
     siteName: siteConfig.siteName,
     images: [`${siteConfig.url}/images/contact-us.png`],
     type: 'article',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 export default function RootLayout({ children }: { children: any }) {
   return <>
-    <link  rel="canonical" href={`${siteConfig.url+CONTACT_US}`}/>
+    <link  rel="canonical" href={ `${siteConfig.url}/add-directory/`}/>
     {children}
     </>;
 }

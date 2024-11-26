@@ -1,0 +1,13 @@
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  console.log('Middleware triggered for URL:', request.url); // For debugging
+
+  // Redirect from /category-details/?category=1732000863567522348 to /blockchain/
+  if (request.nextUrl.pathname === '/category-details/' && request.nextUrl.searchParams.get('category') === '1732000863567522348') {
+    return NextResponse.redirect(new URL('/blockchain/', request.url), 301); // Permanent redirect
+  }
+
+  return NextResponse.next(); // Allow all other requests to proceed
+}

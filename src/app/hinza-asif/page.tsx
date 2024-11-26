@@ -36,7 +36,7 @@ import Hinza from '@/assets/Img/hinza.jpg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import NewsComponent  from '@/components/googlenews/news_old';
+
 export default function HinzaAsif() {
   const { t, changeLocale } = useLocalization(LANG);
   const [hideMyContent, setHideMyContent] = useState(true);
@@ -263,7 +263,11 @@ export default function HinzaAsif() {
                               </li>
                               <li>
                                 <Link
-                                  href='https://www.youtube.com/channel/UCO18Z_ft-kBWh4g7rXqqeLQ'
+                                  href={
+                                    LANG == 'jp'
+                                      ? 'https://www.youtube.com/@BlockZa-Japan'
+                                      : 'https://www.youtube.com/@blockza-io'
+                                  }
                                   target='_blank'
                                 >
                                   <Image
@@ -304,9 +308,7 @@ export default function HinzaAsif() {
                             )}
                           </p>
                         </div>
-                      <div className='row'>
-                        <NewsComponent />
-                      </div>
+
                         <div
                           id='Experienced-Media-Business-Growth-Partnership'
                           className='ww-width'

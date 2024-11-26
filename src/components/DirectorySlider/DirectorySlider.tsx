@@ -126,7 +126,7 @@ export default React.memo(function DirectorySlider({
   background-color: #1e5fb3; 
   color:#fff;
   font-weight: bold; 
-  font-size: 16px;
+  font-size: 14px;
   padding: 2px 16px; 
   border-radius: 30px; 
   text-decoration: none; 

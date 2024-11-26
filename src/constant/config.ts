@@ -95,11 +95,11 @@ const siteConfigEng = {
   jsonLdHomeImage: `https://pro.blockza.io/_next/static/media/Logo-2.d7a1ae8c.png`,
   jsonLdHomeSameas: [
     "https://www.facebook.com/nftstudio24.eth/",
-    "https://twitter.com/nftstudio24/",
-    "https://t.me/NFTStudio24_official",
+    "https://x.com/blockza_io/",
+    "https://t.me/blockza_io/",
     "https://www.instagram.com/nftstudio24/",
-    "https://ng.linkedin.com/company/nftstudio24-com/",
-    "https://www.youtube.com/channel/UCO18Z_ft-kBWh4g7rXqqeLQ"
+    "https://www.linkedin.com/company/blockza-io/",
+    "https://www.youtube.com/@blockza-io"
   ],
   pressreleasetitle: "Boost Your Web3, DeFi, and Crypto Projects' Visibility with BlockZa Press Release Service",
   pressreleaseDes: "Use BlockZa press release service to increase the exposure of your Web3, DeFi, or dApp project to reach more than a million active members.",
@@ -111,7 +111,7 @@ const siteConfigEng = {
   eventsPgDetail: ` BlockZa will promote your Web3, blockchain, and cryptocurrency events across the various channels. You may reach a lively, interested audience of over a million people from more than ten countries through our platform. We ensure your event receives the recognition it deserves in the vibrant cryptocurrency community.
 
             Reach out at <a href="mailto:support@blockza.io">support@blockza.io</a> for your event promotion!`,
-  twitterLink: "https://x.com/nftstudio24",
+  twitterLink: "https://x.com/blockza_io/",
   phnumber:"+81362816114",
 address:"7F Nihonbashi Daiei Building, 1-2-6 Nihonbashi Muromachi, Chuo-ku, Tokyo 103-0022",
 latestPagetitle:"Breaking News & Updates: Blockchain, Web3, Crypto, Metaverse, AI",
@@ -141,15 +141,22 @@ web3title: 'Discover Web3: A Beginner’s Guide to the Future of the Internet',
   
   aititle: 'AI in Web3: How Artificial Intelligence is Shaping the Future',
   aidesc: 'Learn how AI is powering innovations in Web3, from data analysis to personalized experiences.',
-  blockchainurl: `${EN_SITE_URL}/blockchain/`,
+  aichatbottitle:'BlockZa AI Assistant - Simplifying Blockchain and Web3 for Everyone', 
+  aichatbotdesc:'BlockZa AI Assistant makes blockchain and Web3 easy to understand. Get 24/7 support, simple explanations, and quick answers to navigate the decentralized world effortlessly. Start exploring today! ',
+  adddirectorytitle: 'List Your Web3 Project in Blockza Directory - Gain Global Visibility',
+adddirectorydesc: 'Join Blockza’s Web3 Directory to showcase your innovation. Reach a global audience, build credibility, and connect with top industry leaders in the decentralized world. Submit your project today and leverage AI-powered tools to amplify your presence!',
+  campaigntitle:'Blockza Campaigns - Ignite Your Web3 Impact',
+  campaigndesc:'Fuel your Web3 journey with Blockza Campaigns. Launch, promote, and connect with the global blockchain community to amplify your projects reach and drive meaningful innovation. Start your campaign today!',
+blockchainurl: `${EN_SITE_URL}/blockchain/`,
   web3url: `${EN_SITE_URL}/web3/`,
   cryptourl: `${EN_SITE_URL}/crypto/`,
   defiurl: `${EN_SITE_URL}/defi/`,
   daourl: `${EN_SITE_URL}/dao/`,
   nfturl: `${EN_SITE_URL}/nft/`,
   metaverseurl: `${EN_SITE_URL}/metaverse/`,
-  blockchain_gameurl: `${EN_SITE_URL}/blockchain-game/`,
+  blockchain_gameurl: `${EN_SITE_URL}/blockchain_game/`,
   aiurl: `${EN_SITE_URL}/ai/`
+  
 
 };
 const siteConfigJP = {
@@ -245,11 +252,11 @@ const siteConfigJP = {
   jsonLdHomeImage: "https://jp.blockza.io/_next/static/media/Logo-2.d7a1ae8c.png",
   jsonLdHomeSameas: [
     "https://www.facebook.com/nftstudio24.eth/",
-    "https://twitter.com/nftstudio24_jp/",
-    "https://t.me/NFTStudio24_official",
+    "https://x.com/blockza_jp/",
+    "https://t.me/blockza_io/",
     "https://www.instagram.com/nftstudio24/",
-    "https://ng.linkedin.com/company/nftstudio24-com/",
-    "https://www.youtube.com/channel/UCJiv6h14KpS5iWdGo_Cdf_Q"
+    "https://www.linkedin.com/company/blockza-io/",
+    "https://www.youtube.com/@BlockZa-Japan"
   ],
   pressreleasePgDetail: `競争の激しいWeb3業界。だからこそインパクトを与えることが重要だと思いませんか？当社のプレスリリースは、新しいプロジェクトをコミュニティに伝えたり、投資に関する優良な情報を掲載するのに最適なツールです。Web3とブロックチェーン市場でどのようなことが改善されているのか？また、その改善策や結果を発表するのに効果的な場所です。
 
@@ -260,7 +267,7 @@ const siteConfigJP = {
   eventsPgDetail: `BlockZaはさまざまなチャネルであなたのWeb3、ブロックチェーン、暗号通貨イベントを宣伝します。私たちのプラットフォームを通じて、10カ国以上から100万人以上の聴衆にリーチしてみませんか？BlockZaは、大切なプロジェクトやイベントが、活気ある暗号通貨コミュニティで正当な評価をを受けるよう尽力します。
 
            イベントプロモーションについては、お気軽に以下までお問合せ下さい！ <a href="mailto:support@blockza.io">support@blockza.io</a>`,
-  twitterLink: "https://x.com/nftstudio24_jp",
+  twitterLink: "https://x.com/blockza_jp/",
 phnumber:"+81362816114",
 address:"〒103-0022 東京都中央区日本橋室町1-2-6 日本橋大栄ビル7階",
 latestPagetitle:"速報ニュース＆アップデート：ブロックチェーン、Web3、暗号通貨、DAO、メタバース、AI",
@@ -290,6 +297,12 @@ blockchaingamedesc: 'ブロックチェーンゲームを探り、プレイト�
 
 aititle: 'Web3におけるAI：未来を形作る人工知能',
 aidesc: 'データ分析から個別体験まで、AIがWeb3においてどのような革新をもたらしているか学びましょう。',
+aichatbottitle: '正確で迅速な結果を提供するAI検索',
+aichatbotdesc: 'BlockzaのAI搭載検索で可視性を向上！情報を掲載するだけで、迅速かつ正確な結果と直接リンクを手に入れましょう！',
+adddirectorytitle: 'BlockzaディレクトリにWeb3プロジェクトを掲載 - グローバルな可視性を獲得',
+adddirectorydesc: 'BlockzaのWeb3ディレクトリに参加して、あなたのイノベーションを披露しましょう。グローバルな観客にリーチし、信頼性を高め、分散型の世界で業界のリーダーとつながりましょう。今すぐプロジェクトを提出して、AI搭載ツールで存在感を高めましょう！',
+campaigntitle:'Blockza Web3キャンペーン - プロジェクトを次のレベルへ！',
+  campaigndesc:'Blockzaキャンペーンでプロジェクトを次のレベルへ！グローバルなブロックチェーンコミュニティとつながり、注目を集め、Web3の未来を共に創り上げましょう。今すぐ参加を！', 
 blockchainurl: `${JP_SITE_URL}/blockchain`,
 web3url: `${JP_SITE_URL}/web3/`,
 cryptourl: `${JP_SITE_URL}/crypto/`,
@@ -297,7 +310,7 @@ defiurl: `${JP_SITE_URL}/defi/`,
 daourl: `${JP_SITE_URL}/dao/`,
 nfturl: `${JP_SITE_URL}/nft/`,
 metaverseurl: `${JP_SITE_URL}/metaverse/`,
-blockchain_gameurl: `${JP_SITE_URL}/blockchain-game/`,
+blockchain_gameurl: `${JP_SITE_URL}/blockchain_game/`,
 aiurl: `${JP_SITE_URL}/ai/`
 };
 export const siteConfig = LANG === 'en' ? siteConfigEng : siteConfigJP;

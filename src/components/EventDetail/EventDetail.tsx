@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import Head from 'next/head'; // For setting meta tags
 import Calander from '@/assets/Img/Icons/icon-calender.png';
 import GiftBox from '@/assets/Img/Icons/icon-gift-box.png';
 import bg from '@/assets/Img/bg.jpg';
@@ -35,18 +34,14 @@ export default function EventDetails({ eventId }: { eventId: string }) {
       identity: state.identity,
       articleHeadingsHierarchy: state.articleHeadingsHierarchy,
     }));
-  
   let [event, setEvent] = useState<any>(null);
   const urlparama = useSearchParamsHook();
   const router = useRouter();
-  const [eventTitle, setEventTitle] = useState(''); // For dynamic meta title
-  const [eventDescription, setEventDescription] = useState(''); // For dynamic meta description
   const location = usePathname();
 
   const [isLoading, setIsLoading] = useState(false);
   const [topEvents, setTopEvents] = useState<null | TopEvent[]>();
   const [search, setSearch] = useState('');
-
   const getEvent = async () => {
     const entryActor = makeEntryActor({
       agentOptions: {
@@ -58,11 +53,11 @@ export default function EventDetails({ eventId }: { eventId: string }) {
 
       if (tempEntry.length != 0) {
         if (
-          EVENT_DYNAMIC_PATH_2.startsWith(location) &&
+           EVENT_DYNAMIC_PATH_2.startsWith(location)  &&
           tempEntry[0] &&
           tempEntry[0].isStatic
         ) {
-          return router.push(Event_STATIC_PATH + eventId + '/');
+          return router.push(Event_STATIC_PATH + eventId+"/");
         }
         tempEntry[0].image = await getImage(tempEntry[0].image);
         tempEntry[0].date = utcToLocal(
@@ -74,22 +69,19 @@ export default function EventDetails({ eventId }: { eventId: string }) {
           'MMM D, YYYY'
         );
         setEvent(tempEntry[0]);
-        setEventTitle(tempEntry[0].title); // Set dynamic title
-        setEventDescription(tempEntry[0].shortDescription); // Set dynamic meta description
       }
     }
   };
-
   async function getEvents(reset?: boolean) {
     let searched = reset ? '' : search;
-    let tags = '';
+    let tags = "";
 
     const entryActor = makeEntryActor({
       agentOptions: {
         identity,
       },
     });
-    const resp = await entryActor.get_events(searched, 0, 6, [], [], [], tags);
+    const resp = await entryActor.get_events(searched, 0, 6, [], [], [],tags);
     setIsLoading(true);
     const unEvents = resp.entries;
     if (unEvents.length > 0) {
@@ -131,52 +123,42 @@ export default function EventDetails({ eventId }: { eventId: string }) {
       getEvents();
     }
   };
-
   useEffect(() => {
     getEvents();
   }, []);
-
   useEffect(() => {
     if (auth.state == 'anonymous' || auth.state === 'initialized') getEvent();
   }, [eventId, auth]);
-
   let openMapFn = (id: string) => {
     let link = GOOGLEMAP_URL + id;
     window.open(link);
   };
-
   useEffect(() => {
     if (location.startsWith(Event_STATIC_PATH) && !location.endsWith('/')) {
-      router.push(`${Event_STATIC_PATH + eventId}/`);
-    }
-  }, [location]);
-
+     router.push(`${Event_STATIC_PATH + eventId}/`);
+   }
+   
+     }, [])
   return (
     <>
-      {/* Dynamic Meta Tags */}
-      <Head>
-        <title>{eventTitle ? eventTitle : 'Event Details'}</title>
-        <meta name="description" content={eventDescription || 'Event Details Page'} />
-      </Head>
-
-      <main id="main">
+      <main id='main'>
         <ins
-          className="adsbygoogle"
+          className='adsbygoogle'
           style={{ display: 'block', textAlign: 'center' }}
-          data-ad-layout="in-article"
-          data-ad-format="fluid"
-          data-ad-client="ca-pub-8110270797239445"
-          data-ad-slot="3863906898"
+          data-ad-layout='in-article'
+          data-ad-format='fluid'
+          data-ad-client='ca-pub-8110270797239445'
+          data-ad-slot='3863906898'
         />
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        <div className="main-inner event-detail-page">
-          <div className="inner-content">
+        <div className='main-inner event-detail-page'>
+          <div className='inner-content'>
             <Row>
-              <Col xl="12" lg="12" md="12">
-                <Breadcrumb className="new-breadcrumb web">
+              <Col xl='12' lg='12' md='12'>
+                <Breadcrumb className='new-breadcrumb web'>
                   <Breadcrumb.Item>
-                    <Link href="/">
-                      <i className="fa fa-home" />
+                    <Link href='/'>
+                      <i className='fa fa-home' />
                     </Link>
                   </Breadcrumb.Item>
                   <Breadcrumb.Item active>
@@ -188,7 +170,7 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                         content={event.title.length != 0 ? event.title : ''}
                       >
                         <Link
-                          href="/"
+                          href='/'
                           style={{
                             pointerEvents: 'none',
                           }}
@@ -202,26 +184,26 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                   )}
                 </Breadcrumb>
               </Col>
-              <Col xl="12" lg="12" md="12">
-                <div className="event-innr">
+              <Col xl='12' lg='12' md='12'>
+                <div className='event-innr'>
                   <EventSlider eventList={topEvents} />
                 </div>
               </Col>
             </Row>
             {event ? (
               <Row>
-                <Col xl="12" lg="12" md="12">
-                  <div className="spacer-20" />
+                <Col xl='12' lg='12' md='12'>
+                  <div className='spacer-20' />
                   <h1>
                     <b>{event ? event.title : ''}</b>
                   </h1>
-                  <div className="spacer-10" />
+                  <div className='spacer-10' />
                   <h3>
-                    <Image src={Calander} alt="Calander" />{' '}
+                    <Image src={Calander} alt='Calander' />{' '}
                     {event ? event.date : ''}
                   </h3>
-                  <div className="spacer-20" />
-                  <div className="event-innr d-flex justify-content-center">
+                  <div className='spacer-20' />
+                  <div className='event-innr d-flex justify-content-center'>
                     <div
                       style={{
                         aspectRatio: ARTICLE_FEATURED_IMAGE_ASPECT,
@@ -231,21 +213,24 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                         maxWidth: '800px',
                       }}
                     >
+                      {/* <Image src={bg} alt='Bg' /> */}
+
                       <Image
                         src={event ? event.image : post1}
+                        // className='backend-img'
                         fill
                         alt={`feature image`}
                       />
                     </div>
                   </div>
-                  <div className="spacer-40" />
+                  <div className='spacer-40' />
                   <h4>{event ? event.shortDescription : ''}</h4>
-                  <div className="spacer-50" />
+                  <div className='spacer-50' />
                 </Col>
-                <Col xl="12" lg="12" md="12">
+                <Col xl='12' lg='12' md='12'>
                   <div>
                     <p>
-                       <b>{t('date')}:</b> {event ? event.date : ''}
+                      📅 <b>{t('date')}:</b> {event ? event.date : ''}
                     </p>
                     <p
                       onClick={() => {
@@ -253,23 +238,24 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                       }}
                       style={{ cursor: 'pointer' }}
                     >
-                      <b>{t('Location')}: </b>
-                      <span className="hover">
+                      📍<b>{t('Location')}: </b>
+                      <span className='hover'>
+                        {' '}
                         {event ? event.location : ''}
                       </span>
                     </p>
                     <p>
-                       <b>{t('Event Highlights:')}</b>
+                      🔥 <b>{t('Event Highlights:')}</b>
                     </p>
                     {event ? parse(event.description) : ''}
-                    <div className="spacer-10" />
-                    <div className="btn-cntnr-pnl">
+                    <div className='spacer-10' />
+                    <div className='btn-cntnr-pnl'>
                       <div>
                         {event && event?.applyTicket.length != 0 && (
                           <Link
                             href={event ? event.applyTicket : '#'}
-                            target="_blank"
-                            className="reg-btn bluebg"
+                            target='_blank'
+                            className='reg-btn bluebg'
                           >
                             {t('Get Your Tickets Now')}
                           </Link>
@@ -277,8 +263,8 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                         {event && event?.discountTicket.length != 0 && (
                           <Link
                             href={event ? event.discountTicket : '#'}
-                            target="_blank"
-                            className="red-link mx-4"
+                            target='_blank'
+                            className='red-link mx-4'
                           >
                             {t('Apply for discount ticket here!')}
                           </Link>
@@ -288,19 +274,20 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                       {event && event?.freeTicket.length != 0 && (
                         <Link
                           href={event ? event.freeTicket : '#'}
-                          className="reg-btn red"
-                          target="_blank"
+                          className='reg-btn red'
+                          target='_blank'
                         >
-                          <Image src={GiftBox} alt="Gift" /> {t('Free Ticket')}
+                          <Image src={GiftBox} alt='Gift' /> {t('Free Ticket')}
                         </Link>
                       )}
                     </div>
-                    <div className="spacer-30" />
+                    <div className='spacer-30' />
 
                     {event && event.website.length != 0 && (
                       <p>
                         👉<b>{t('website')}:</b>{' '}
                         <Link href={`${event ? event.website : '#'}`}>
+                          {' '}
                           {event ? event.website : ''}
                         </Link>
                       </p>
@@ -308,11 +295,11 @@ export default function EventDetails({ eventId }: { eventId: string }) {
 
                     <p>
                       {event && (
-                        <ul className="post-social-list-2 d-flex flex-wrap">
+                        <ul className='post-social-list-2 d-flex flex-wrap'>
                           {event.twitter.length != 0 ? (
                             <li>
-                              <Link href={event.twitter} target="_blank">
-                                <i className="fa fa-twitter" />
+                              <Link href={event.twitter} target='_blank'>
+                                <i className='fa fa-twitter' />
                               </Link>
                             </li>
                           ) : (
@@ -320,8 +307,8 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                           )}
                           {event.telegram.length != 0 ? (
                             <li>
-                              <Link href={event.telegram} target="_blank">
-                                <i className="fa fa-telegram" />
+                              <Link href={event.telegram} target='_blank'>
+                                <i className='fa fa-telegram' />
                               </Link>
                             </li>
                           ) : (
@@ -329,8 +316,8 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                           )}
                           {event.instagram.length != 0 ? (
                             <li>
-                              <Link href={event.instagram} target="_blank">
-                                <i className="fa fa-instagram" />
+                              <Link href={event.instagram} target='_blank'>
+                                <i className='fa fa-instagram' />
                               </Link>
                             </li>
                           ) : (
@@ -338,8 +325,8 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                           )}
                           {event.facebook.length != 0 ? (
                             <li>
-                              <Link href={event.facebook} target="_blank">
-                                <i className="fa fa-facebook" />
+                              <Link href={event.facebook} target='_blank'>
+                                <i className='fa fa-facebook' />
                               </Link>
                             </li>
                           ) : (
@@ -347,8 +334,8 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                           )}
                           {event.linkdin.length != 0 ? (
                             <li>
-                              <Link href={event.linkdin} target="_blank">
-                                <i className="fa fa-linkedin" />
+                              <Link href={event.linkdin} target='_blank'>
+                                <i className='fa fa-linkedin' />
                               </Link>
                             </li>
                           ) : (
@@ -357,40 +344,37 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                         </ul>
                       )}
                     </p>
-                    <div className="spacer-50" />
+                    <div className='spacer-50' />
                   </div>
-                  <div className="details-address-panel">
+                  <div className='details-address-panel'>
                     <Row>
-                      <Col xl="4" lg="4" md="6">
+                      <Col xl='4' lg='4' md='6'>
                         <h4>
                           <b>{t('DETAILS')}</b>
                         </h4>
-                        <h6 className="m-0">{t('Start Date')}:</h6>
+                        <h6 className='m-0'>{t('Start Date')}:</h6>
                         <p>{event ? event.date : ''}</p>
-                        <h6 className="m-0">{t('End Date')}:</h6>
+                        <h6 className='m-0'>{t('End Date')}:</h6>
                         <p>{event ? event.endDate : ''}</p>
-                        <h6 className="m-0">{t('Event Tags')}:</h6>
+                        <h6 className='m-0'>{t('Event Tags')}:</h6>
                         {event &&
                           event.tags.map((e: any) => {
                             return (
-                              <span
-                                className="mb-0 pointer"
-                                key={e}
-                                onClick={() =>
-                                  router.push(`${EVENT_TAG_CONTENT_ROUTE}?tag=${e}`)
-                                }
-                              >
+                              <span className='mb-0 pointer' key={e} onClick={(a) =>
+                                router.push(`${EVENT_TAG_CONTENT_ROUTE}?tag=${e}`)
+                              }>
                                 {e}
                               </span>
                             );
                           })}
 
-                        <div className="spacer-20" />
+                        <div className='spacer-20' />
                         {event && event.website.length != 0 ? (
                           <>
-                            <h6 className="m-0">{t('website')}:</h6>
+                            {' '}
+                            <h6 className='m-0'>{t('website')}:</h6>
                             <Link
-                              target="_blank"
+                              target='_blank'
                               href={event ? event.website : '#'}
                             >
                               {event ? event.website : ''}
@@ -400,28 +384,31 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                           ''
                         )}
 
-                        <div className="spacer-20" />
+                        <br />
+
+                        <div className='spacer-20' />
                       </Col>
-                      <Col xl="4" lg="4" md="6">
+                      <Col xl='4' lg='4' md='6'>
                         <h6>{t('VENUE')}</h6>
-                        <div className="spacer-10" />
+                        <div className='spacer-10' />
                         <p>{event ? event.location : ''}</p>
 
-                        <div className="spacer-20" />
+                        <div className='spacer-20' />
                       </Col>
-                      <Col xl="4" lg="4" md="12">
-                        <div className="map-pnl">
+                      <Col xl='4' lg='4' md='12'>
+                        <div className='map-pnl'>
                           {event && (
                             <iframe
                               src={`https://maps.google.com/maps?q=${event.lat}, ${event.lng}&z=15&output=embed`}
-                              width="100%"
-                              height="400"
+                              width='100%'
+                              height='400'
                               allowFullScreen={true}
                             />
                           )}
-                          <div className="d-flex justify-content-center mt-3">
+                          <div className='d-flex justify-content-center mt-3'>
                             <Link
-                              target="_blank"
+                              target='_blank'
+                              // href={`https://google.com/maps/?q=${event.lat},${event.lng}`}
                               href={'#'}
                               onClick={(e) => {
                                 e.preventDefault();
@@ -438,7 +425,7 @@ export default function EventDetails({ eventId }: { eventId: string }) {
                 </Col>
               </Row>
             ) : (
-              <div className="d-flex justify-content-center mt-5">
+              <div className='d-flex justify-content-center mt-5'>
                 <Spinner />
               </div>
             )}
@@ -447,5 +434,4 @@ export default function EventDetails({ eventId }: { eventId: string }) {
       </main>
     </>
   );
-}   
- 
+}

@@ -98,7 +98,7 @@ export const ALL_QUIZ_ROUTE_ADMIN = '/super-admin/manage-quiz/';
 export const MANAGE_SURVEY_ADMIN = "/super-admin/manage-survey/"
 export const USER_ACTIVITES_DASHBOARD = "/super-admin/user-activities/"
 export const token_claims_page = "/super-admin/claims-requests/"
-export const ai_assistance = "/ai-assistance/"
+
 
 export const SURVEY = "/take-survey";
 export const BLOCKED = "/blocked";
@@ -128,9 +128,9 @@ export const Web3_Category_Link = LANG == "jp" ? "/web3/" : 'https://pro.blockza
 export const crypto_Category_Link = LANG == "jp" ? "/crypto/" : 'https://pro.blockza.io/crypto/';
 export const defi_Category_Link = LANG == "jp" ? "/defi/" : 'https://pro.blockza.io/defi/';
 export const dao_Category_Link = LANG == "jp" ? "/dao/" : 'https://pro.blockza.io/dao/';
-export const nft_Category_Link = LANG == "jp" ? "/nft/" : 'https://pto.blockza.io/nft/';
+export const nft_Category_Link = LANG == "jp" ? "/nft/" : 'https://pro.blockza.io/nft/';
 export const metaverse_Category_Link = LANG == "jp" ? "/metaverse/" : 'https://pro.blockza.io/metaverse/';
-export const blockchaingame_Category_Link = LANG == "jp" ? "/blockchaingame/" : 'https://pro.blockza.io/blockchaingame/';
+export const blockchaingame_Category_Link = LANG == "jp" ? "/blockchain_game/" : 'https://pro.blockza.io/blockchain_game/';
 export const ai_Category_Link = LANG == "jp" ? "/ai/" : 'https://pro.blockza.io/ai/';
 
 

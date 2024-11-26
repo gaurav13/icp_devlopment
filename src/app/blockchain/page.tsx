@@ -44,7 +44,6 @@ import {
 } from '@/constant/routes';
 import ReactPaginate from 'react-paginate';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import '../../styles/Blockchain.module.css';
 let CATEGORY_ENTRIES_PERPAGE = 20;
 
 
@@ -253,7 +252,7 @@ export default function CategoryDetails() {
 
   const urlparama = useSearchParamsHook();
   const searchParams = new URLSearchParams(urlparama);
-  const categoryId = LANG === 'jp' ? "1710137112381095238" : "1718641457527889243";
+  const categoryId = LANG === 'jp' ? "1710822432496415429" : "1718641457527889243";
   const latestnews = searchParams.get('news');
   const [forcePaginate, setForcePaginate] = useState(0);
   const [hasMore, setHasMore] = useState(true);

@@ -336,7 +336,7 @@ export default function Events() {
               <Col xl='12' lg='12' md='12'>
                 <h1 className='podcastpageheading'>
                   {t(
-                    'test 1234 Use BlockZa to highlight Your Web3, Blockchain, and Crypto Events'
+                    'Use BlockZa to highlight Your Web3, Blockchain, and Crypto Events'
                   )}
                 </h1>
                 {/* <p>{siteConfig.eventsPgDetail}</p> */}

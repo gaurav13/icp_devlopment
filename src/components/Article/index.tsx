@@ -226,7 +226,7 @@ export default function Article({
       tempEntry[0] &&
       tempEntry[0].isStatic
     ) {
-      return router.push(ARTICLE_STATIC_PATH + articleId);
+      return router.push(ARTICLE_STATIC_PATH + articleId+"/");
     }
     let TempDirectory = null;
     let tempUser = tempEntry[0]?.user?.toString();
@@ -309,7 +309,7 @@ export default function Article({
       tempEntry[0] &&
       tempEntry[0].isStatic
     ) {
-      return router.push(ARTICLE_STATIC_PATH + articleId);
+      return router.push(ARTICLE_STATIC_PATH + articleId+"/");
     }
     let TempDirectory = null;
     let tempUser = tempEntry[0]?.user?.toString();
@@ -427,6 +427,13 @@ export default function Article({
   useEffect(() => {
     addViewfn();
   }, [articleId]);
+  useEffect(() => {
+ if (location.startsWith(ARTICLE_STATIC_PATH) && !location.endsWith('/')) {
+  router.push(`${ARTICLE_STATIC_PATH + articleId}/`);
+}
+
+  }, [])
+
   // router.push('/route')
   return (
     <>
@@ -458,18 +465,9 @@ export default function Article({
                           : ''
                       }
                     >
-                      <Link
-                        href={`/category-details?category=${entry?.category[0]}`}
-                      >
-                        {entry?.categoryName[0].categoryName
-                          ? entry?.categoryName[0].categoryName?.length > 8
-                            ? `${entry?.categoryName[0].categoryName.slice(
-                                0,
-                                8
-                              )}...`
-                            : entry?.categoryName[0].categoryName
-                          : ''}
-                      </Link>
+                      <Link href={`/category-details?category=${entry?.category[0]}`}>
+  {entry?.categoryName[0].categoryName || ''}
+</Link>
                     </Tippy>
 
                     {/* {entry?.category[0]} */}
@@ -577,29 +575,18 @@ export default function Article({
                         />
                       </div>
                       <Link
-                        href='#'
-                        className='txty-pnl'
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (entry?.isCompanySelected && entry?.directory) {
-                            router.push(
-                              entry?.directory[0].isStatic
-                                ? `${DIRECTORY_STATIC_PATH + entry?.companyId}`
-                                : `${
-                                    entry
-                                      ? DIRECTORY_DINAMIC_PATH +
-                                        entry?.companyId
-                                      : DIRECTORY_DINAMIC_PATH + '#'
-                                  }`
-                            );
-                          } else {
-                            router.push(
-                              `/category-details?category=${
+                        href={(entry?.isCompanySelected && entry?.directory)?
+                          entry?.directory[0].isStatic
+                            ? `${DIRECTORY_STATIC_PATH + entry?.companyId}`
+                            : `${
+                                entry
+                                  ? DIRECTORY_DINAMIC_PATH +
+                                    entry?.companyId
+                                  : DIRECTORY_DINAMIC_PATH + '#'
+                              }`:`/category-details?category=${
                                 entry ? entry?.category[0] : '#'
-                              }`
-                            );
-                          }
-                        }}
+                              }`}
+                        className='txty-pnl'
                       >
                         <h6 className='big'>{t('ON')}</h6>
                         <h4 className='mb-0' style={{ lineHeight: 1 }}>

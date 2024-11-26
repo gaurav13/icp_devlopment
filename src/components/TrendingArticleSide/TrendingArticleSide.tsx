@@ -113,11 +113,7 @@ export default React.memo(function TrendingArticleSide({
                 {entry[1].image ? (
                   <div className='img-pnl'
                   style={{ height: 'auto' }}>
-                   <Image
-                  src={entry[1].image}
-                  fill={true}
-                  alt="image"
-                />
+                    <Image src={entry[1].image} fill={true} alt='image' />
                   </div>
                 ) : (
                   <div className='img-pnl' />

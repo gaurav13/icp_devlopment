@@ -27,7 +27,11 @@ export default function SocialList() {
           onMouseOut={handleMouseOut}
         >
           <a
-            href='https://twitter.com/nftstudio24'
+            href={
+              LANG == 'jp'
+                ? 'https://x.com/blockza_jp/'
+                : 'https://x.com/blockza_io/'
+            }
             target='_blank'
             className='mb-0'
           >
@@ -41,13 +45,13 @@ export default function SocialList() {
           </a>
         </li>
         <li>
-          <Link href='https://t.me/NFTStudio24_official' target='_blank'>
+          <Link href='https://t.me/blockza_io/' target='_blank'>
             <i className='fa fa-telegram' />
           </Link>
         </li>
         <li>
           <Link
-            href='https://www.linkedin.com/company/nftstudio24-com?trk=public_profile_experience-item_profile-section-card_image-click&originalSubdomain=ng'
+            href='https://www.linkedin.com/company/blockza-io/'
             target='_blank'
           >
             <i className='fa fa-linkedin-square' />
@@ -57,8 +61,8 @@ export default function SocialList() {
           <Link
             href={
               LANG == 'jp'
-                ? ' https://www.youtube.com/channel/UCJiv6h14KpS5iWdGo_Cdf_Q'
-                : 'https://www.youtube.com/@nftstudio24'
+                ? 'https://www.youtube.com/@BlockZa-Japan'
+                : 'https://www.youtube.com/@blockza-io'
             }
             target='_blank'
           >

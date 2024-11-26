@@ -44,9 +44,8 @@ import {
 } from '@/constant/routes';
 import ReactPaginate from 'react-paginate';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
+import { redirect } from 'next/navigation';
 let CATEGORY_ENTRIES_PERPAGE = 20;
-
 
 function EntryItem({ entry, entryActor }: { entry: any; entryActor: any }) {
   const [likeCount, setLikeCount] = useState<number>(entry.likes);
@@ -244,6 +243,7 @@ function EntryItem({ entry, entryActor }: { entry: any; entryActor: any }) {
   );
 }
 export default function CategoryDetails() {
+ 
   const [category, setCategory] = useState<any | undefined>();
   const [search, setSearch] = useState('');
   const [entries, setEntries] = useState<any[]>();
@@ -263,6 +263,7 @@ export default function CategoryDetails() {
     auth: state.auth,
     identity: state.identity,
   }));
+ 
   const router = useRouter();
   const entryActor = makeEntryActor({
     agentOptions: {
@@ -453,7 +454,18 @@ export default function CategoryDetails() {
     };
     getnSetCategory();
   }, [categoryId, latestnews]);
+  {/*const categoryIds = searchParams.get('category'); // Get the `category` query parameter
+  console.log('Data in categoryid:', categoryIds);
+    useEffect(() => {
+      if (categoryIds === '1732000863567522348') {
+        router.push('/blockchain/'); // Redirect to /blockchain/ if categoryId matches
+      }
+    }, [categoryIds, router]);*/}
+    
 
+    if (categoryId === '1732000863567522348') {
+      redirect('/blockchain/');
+    }
   return (
     <>
       <main id='main'>

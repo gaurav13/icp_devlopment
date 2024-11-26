@@ -72,5 +72,7 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
 };
+// next.config.js
+
 
 module.exports = nextConfig;

@@ -4,7 +4,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import mobile1 from '@/assets/Img/mobile-1.png';
 import mobile2 from '@/assets/Img/mobile-2.png';
 import mobile3 from '@/assets/Img/mobile-3.png';
-import mobile4 from '@/assets/Img/mobile-4.png';
+import mobile4 from '@/assets/Img/ai-chatbot.png';
 import mobile5 from '@/assets/Img/mobile-5.png';
 import Footerlogo from '@/assets/Img/Logo/footerlogo-new.png';
 import Link from 'next/link';
@@ -31,7 +31,9 @@ import {
   QUIZ,
   QUIZ_ROUTE,
   TERMSOFUSE,
-  ai_assistance,
+  Web3_Category_Link,
+  nft_Category_Link,
+  blockchaingame_Category_Link,
 } from '@/constant/routes';
 import ScrollToTopbtn from '@/components/ScrollToTopBtn/ScrollToTopbtn';
 
@@ -66,6 +68,9 @@ export default function Footer() {
     event: string;
     disclaimer: string;
     quiz: string;
+    web3url:string;
+    nfturl:string;
+    blockchaingameurl:string;
   } = {
     ethicspolicy: ETHICS_POLICY,
     editorpolicy: EDITOR_POLICY,
@@ -79,6 +84,9 @@ export default function Footer() {
     hinzaAsif: HINZAASIF,
     disclaimer: DISCLAIMER,
     quiz: QUIZ,
+    web3url:Web3_Category_Link,
+    nfturl:nft_Category_Link,
+    blockchaingameurl:blockchaingame_Category_Link,
   };
   let router=useRouter()
 let openLinkfn=(l:string)=>{
@@ -119,7 +127,7 @@ let openLinkfn=(l:string)=>{
                       <li>
                         <Link
                           target='_blank'
-                          href='https://twitter.com/nftstudio24'
+                          href='https://x.com/blockza_io/'
                         >
                           {/* <i className='fa-brands fa-x-twitter'/> */}
                           <TwitterSVGIcon color='white' />
@@ -136,7 +144,7 @@ let openLinkfn=(l:string)=>{
                       <li>
                         <Link
                           target='_blank'
-                          href='https://www.youtube.com/channel/UCO18Z_ft-kBWh4g7rXqqeLQ'
+                          href='https://www.youtube.com/@blockza-io'
                         >
                           <i className='fa fa-youtube-play' />
                         </Link>
@@ -144,7 +152,7 @@ let openLinkfn=(l:string)=>{
                       <li>
                         <Link
                           target='_blank'
-                          href='https://www.linkedin.com/company/nftstudio24-com?trk=public_profile_experience-item_profile-section-card_image-click&originalSubdomain=ng'
+                          href='https://www.linkedin.com/company/blockza-io/'
                         >
                           <i className='fa fa-linkedin' />
                         </Link>
@@ -152,7 +160,7 @@ let openLinkfn=(l:string)=>{
                       <li>
                         <Link
                           target='_blank'
-                          href='https://t.me/NFTStudio24_official'
+                          href='https://t.me/blockza_io/'
                         >
                           <i className='fa fa-telegram' />
                         </Link>
@@ -206,7 +214,7 @@ let openLinkfn=(l:string)=>{
                       <div className='heading6'>{t('Top Categories')}</div>
                       <ul>
                         <li>
-                          <Link href={CATEGORY_PATH.LATEST_NEW}>
+                          <Link href="/latest-news/">
                             {t('News')}
                           </Link>
                         </li>
@@ -216,17 +224,17 @@ let openLinkfn=(l:string)=>{
                           </Link>
                         </li>
                         <li>
-                          <Link href={CATEGORY_PATH.NFT}>
+                          <Link href={routes.nfturl}>
                             {t('NFT Collection Review')}
                           </Link>
                         </li>
                         <li>
-                          <Link href={CATEGORY_PATH.BLOCKCHAIN_GAMES}>
+                          <Link href={routes.blockchaingameurl}>
                             {t('Blockchain Game Review')}
                           </Link>
                         </li>
                         <li>
-                          <Link href={CATEGORY_PATH.WEB3}>
+                          <Link href={routes.web3url}>
                             {t('WEB3 Guide')}
                           </Link>
                         </li>
@@ -306,7 +314,11 @@ let openLinkfn=(l:string)=>{
                         <li>
                           <Link
                             target='_blank'
-                            href='https://twitter.com/nftstudio24'
+                            href={
+                              LANG == 'jp'
+                                ? 'https://x.com/blockza_jp/'
+                                : 'https://x.com/blockza_io/'
+                            }
                           >
                             {/* <i className='fa-brands fa-x-twitter'/> */}
                             <TwitterSVGIcon color='white' />
@@ -321,9 +333,13 @@ let openLinkfn=(l:string)=>{
                           </Link>
                         </li>
                         <li>
-                          <Link
+                        <Link
+                            href={
+                              LANG == 'jp'
+                                ? 'https://www.youtube.com/@BlockZa-Japan'
+                                : 'https://www.youtube.com/@blockza-io'
+                            }
                             target='_blank'
-                            href='https://www.youtube.com/channel/UCO18Z_ft-kBWh4g7rXqqeLQ'
                           >
                             <i className='fa fa-youtube-play' />
                           </Link>
@@ -331,7 +347,7 @@ let openLinkfn=(l:string)=>{
                         <li>
                           <Link
                             target='_blank'
-                            href='https://www.linkedin.com/company/nftstudio24-com?trk=public_profile_experience-item_profile-section-card_image-click&originalSubdomain=ng'
+                            href='https://www.linkedin.com/company/blockza-io/'
                           >
                             <i className='fa fa-linkedin' />
                           </Link>
@@ -339,7 +355,7 @@ let openLinkfn=(l:string)=>{
                         <li>
                           <Link
                             target='_blank'
-                            href='https://t.me/NFTStudio24_official'
+                            href='https://t.me/blockza_io/'
                           >
                             <i className='fa fa-telegram' />
                           </Link>
@@ -431,10 +447,12 @@ let openLinkfn=(l:string)=>{
                     <Image src={mobile3} alt='Mobile' />
                   </div>
                 </li>
-                <li onClick={()=>openLinkfn(ai_assistance)}>
-                  <Image src={mobile4} alt='Mobile' />
-                  <p>{t('earn')}</p>
-                </li>
+                <li>
+            <Link href="/ai-assistant/">
+              <Image src={mobile4} alt="Mobile" />
+              <p>{t('ChatBot')}</p>
+            </Link>
+          </li>
             
                 <li onClick={()=>openLinkfn(CONTACT_US)}>
                   <Image src={mobile5} alt='Mobile' />

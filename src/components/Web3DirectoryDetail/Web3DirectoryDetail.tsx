@@ -363,6 +363,19 @@ export default function Web3DirectoryDetail({
         .news-column {
           transition: all 0.3s ease; /* Optional: Add a smooth transition effect */
         }
+          /* Reduce the size of icons in the specific list */
+        .small-icons i {
+          font-size: 20px; /* Adjust the size as per your requirement */
+          line-height: 1;
+          width: auto; /* Ensure the icon's width adapts */
+          height: auto;
+        }
+
+        /* Optional: Add spacing between icons for better visibility */
+        .small-icons li {
+          margin-right: 10px; /* Adjust spacing as needed */
+        }
+
           @media (max-width: 576px) {
         .left-side-pnl{display:none}
         }
@@ -567,7 +580,7 @@ export default function Web3DirectoryDetail({
                         institutional markets lending business and data, charts,
                         and analytics.
                       </p> */}
-                        <ul className='post-social-list-2 d-flex flex-wrap'>
+                        <ul className='post-social-list-2 small-icons d-flex flex-wrap'>
                           {directory.length != 0 ? (
                             directory[0].twitter[0].length != 0 ? (
                               <li>
@@ -665,7 +678,8 @@ export default function Web3DirectoryDetail({
             >
                {t('Contact')}{' '}
             </Link>
-            <DirectoryModelPopup show={showContactModal} handleClose={handleCloseContactModal} />
+            <DirectoryModelPopup show={showContactModal} handleClose={handleCloseContactModal}  companyName={directory[0]?.company} />
+
 
                           
                               </li>
@@ -691,15 +705,23 @@ export default function Web3DirectoryDetail({
                       </div> */}
                     </Col>
                     <Col xxl='4' xl='5' lg='6' md='8'>
-                    <div className='img-box-pnl'>
-                        <Image
-                          src={ directory[0]?.companyBanner }
-                          alt='founder image'
-                          height={100}
-                          width={100}
-                          style={{ height: '100%', width: '100%' }}
-                        />
-                      </div>
+                            <div className='img-box-pnl'>
+          {isLoading ? (
+            <Spinner animation='border' />
+          ) : (
+            directory.length > 0 &&
+            directory[0]?.companyBanner && (
+              <Image
+                src={directory[0].companyBanner}
+                alt='company banner'
+                height={100}
+                width={100}
+                style={{ height: '100%', width: '100%' }}
+              />
+            )
+          )}
+        </div>
+
                       {/* <Image src={bg} alt='Infinity' /> */}
                     </Col>
                     <Col xl='12'>
@@ -808,7 +830,11 @@ export default function Web3DirectoryDetail({
          </div>
                       </div>
                       <div className='full-div'>
-                        <div className='shadow-txt-pnl '>
+                      <h3>
+                        {LANG === 'jp' ? 'チーム' : 'Team'}
+                      </h3>
+
+                        <div className='shadow-txt-pnl mt-1'>
                         <div>
   <p>
     <i>

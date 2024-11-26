@@ -575,7 +575,7 @@ export default function Article() {
                       <Row>
                         <Col xxl='12'>
                           {isGetting ? (
-                            <div className='d-flex test justify-content-center w-full'>
+                            <div className='d-flex justify-content-center w-full'>
                               <Spinner />
                             </div>
                           ) : companyListOfId.length > 0 ? (

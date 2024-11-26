@@ -34,7 +34,7 @@ export default function categorydetail() {
   return (
     <>
       <main id='main'>
-        <div className='main-inner home category-details'>
+        <div className='main-inner home category-details manu'>
           <Head>
             <title>{t('Hi')}</title>
           </Head>
