@@ -285,7 +285,7 @@ export default function CategoriesList({
     <>
       <Row>
         <Col xl='12' lg='12' md='12' className='mt-2 mb-4'>
-          <div className='full-div text-left-md'>
+          <div className='gaurave full-div text-left-md'>
             <div className='search-post-pnl'>
               <input
                 type='text'

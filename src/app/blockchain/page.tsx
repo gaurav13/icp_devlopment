@@ -252,7 +252,7 @@ export default function CategoryDetails() {
 
   const urlparama = useSearchParamsHook();
   const searchParams = new URLSearchParams(urlparama);
-  const categoryId = LANG === 'jp' ? "1710822432496415429" : "1718641457527889243";
+  const categoryId = LANG === 'jp' ? "1710822432496415429" : "1719578778026731208";
   const latestnews = searchParams.get('news');
   const [forcePaginate, setForcePaginate] = useState(0);
   const [hasMore, setHasMore] = useState(true);

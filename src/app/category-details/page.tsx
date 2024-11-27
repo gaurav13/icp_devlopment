@@ -463,9 +463,10 @@ export default function CategoryDetails() {
     }, [categoryIds, router]);*/}
     
 
-    if (categoryId === '1732000863567522348') {
+    if (categoryId === '1719578778026731208') {
       redirect('/blockchain/');
     }
+    
   return (
     <>
       <main id='main'>

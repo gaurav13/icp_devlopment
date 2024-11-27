@@ -1,9 +1,8 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
+import Web3ListbyCategoryId from '@/components/web3Listcategory/Web3Listcategory';
+import { makeEntryActor } from '@/dfx/service/actor-locator';
 import { Row, Col, Breadcrumb, Dropdown, Spinner } from 'react-bootstrap';
-import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
 import useLocalization from '@/lib/UseLocalization';
 import { LANG } from '@/constant/language';
@@ -14,11 +13,9 @@ import Doa1 from '@/assets/Img/sidebar-icons/icon-dao-1.png';
 import NFt1 from '@/assets/Img/sidebar-icons/icon-nft-1.png';
 import Metaverse1 from '@/assets/Img/sidebar-icons/icon-metavers-1.png';
 import Game1 from '@/assets/Img/sidebar-icons/icon-games-1.png';
-
 import Coins1 from '@/assets/Img/Icons/icon-coins-2.png';
 import directory2 from '@/assets/Img/Icons/icon-coins-1.png';
 import { useConnectPlugWalletStore } from '@/store/useStore';
-import { makeEntryActor } from '@/dfx/service/actor-locator';
 import logger from '@/lib/logger';
 import { User } from '@/types/profile';
 import { getImage } from '@/components/utils/getImage';
@@ -31,13 +28,20 @@ import { profileAspect, TOP_CATEGORIES_PER_PAGE } from '@/constant/sizes';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
 import CategoriesList from '@/components/CategoriesList';
-import Web3ListbyCategoryId from '@/components/web3List/Web3List';
 import useSearchParamsHook from '@/components/utils/searchParamsHook';
 import ConnectModal from '@/components/Modal';
 import { isUserConnected } from '@/components/utils/utcToLocal';
 import { ADD_WEB3, CONTACT_US } from '@/constant/routes';
+interface ClientCategoryPageProps {
+  categoryId: string; // The category ID mapped from the category name
+  category: string; // The user-friendly category name
+}
 
-export default function Article() {
+const ClientCategoryPage: React.FC<ClientCategoryPageProps> = ({ categoryId, category }) => {
+  const [content, setContent] = useState<string | null>(null);
+  const [companyList, setCompanyList] = useState<any[]>([]);
+  const [companyListSize, setCompanyListSize] = useState(0);
+  const [loading, setLoading] = useState(false);
   const { t, changeLocale } = useLocalization(LANG);
   const [user, setUser] = useState<User | null>();
   const [featuredImage, setFeaturedImage] = useState<string | null>();
@@ -66,18 +70,16 @@ export default function Article() {
   const [DaoDirLoading, setDaoDirLoading] = useState(true);
   const [NFTDirLoading, setNFTDirLoading] = useState(true);
   const [MetaverseDirLoading, setMetaverseDirLoading] = useState(true);
-  const specificElementRef = useRef(null);
+
   const [BlockchainGameDirLoading, setBlockchainGameDirLoading] =
     useState(true);
-
-  const categoryId = searchParams.get('category');
   const [forcePaginate, setForcePaginate] = useState(0);
   const [isGetting, setIsGetting] = useState(true);
   const [hideMyContent, setHideMyContent] = useState(true);
   const [showConnectModal, setShowConnectModal] = useState(false);
   const [categoriesSize, setCategoriesSize] = useState(0);
   const promote = searchParams.get('promoted');
-  const router = useRouter();
+  
   const [categories, setCategories] = useState<any>([]);
   const [companyListOfIdSize, setCompanyListOfIdSize] = useState<any>(0);
 
@@ -86,6 +88,7 @@ export default function Article() {
   const [OldCategory, setOldCategory] = useState<any>({
     name: '',
     logo: blockchain1,
+    description: '', // Add description here
   });
 
   const { auth, setAuth, identity } = useConnectPlugWalletStore((state) => ({
@@ -95,8 +98,61 @@ export default function Article() {
   }));
   const itemsPerPage = 6;
   let pageCount = Math.ceil(companyListOfIdSize / itemsPerPage);
+  // Fetch initial content or metadata
+  const fetchCategoryData = async (categoryId: string) => {
+    // Simulated API or data call
+    return `This is the content for category ID: ${categoryId}`;
+  };
 
-  let addcompanyfn = (e: any) => {
+  // Fetch companies by category
+  const fetchCompaniesByCategory = async (page: number = 0) => {
+    setLoading(true);
+    try {
+      const entryActor = makeEntryActor({
+        agentOptions: {}, // Adjust options if needed
+      });
+
+      const tempWeb3 = await entryActor.getWeb3ListOfAllUsers(
+        categoryId,
+        '', // Add any search terms here if needed
+        page,
+        itemsPerPage
+      );
+
+      const companies = tempWeb3?.web3List || [];
+      const totalCompanies = parseInt(tempWeb3?.amount || '0', 10);
+      setCompanyListSize(totalCompanies);
+
+      const processedCompanies = await Promise.all(
+        companies.map(async (company: any) => {
+          company[1].companyBanner = await getImage(company[1].companyBanner);
+          company[1].founderImage = await getImage(company[1].founderImage);
+          company[1].companyLogo = await getImage(company[1].companyLogo);
+          return company;
+        })
+      );
+
+      setCompanyList(processedCompanies);
+    } catch (error) {
+      console.error('Error fetching companies:', error);
+      toast.error('Error fetching companies.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle page changes
+
+  // Initialize data on component mount
+  useEffect(() => {
+    fetchCategoryData(categoryId).then((data) => {
+      setContent(data); // Replace `data` with the actual fetched response
+    });
+
+    fetchCompaniesByCategory(0); // Fetch initial companies
+  }, [categoryId]);
+{/*------Start of code--------------*/}
+let addcompanyfn = (e: any) => {
     e.preventDefault();
     // if (!identity) return toast.error('Please connect to internet identity.');
     if (!isUserConnected(auth, handleConnectModal)) return;
@@ -185,15 +241,27 @@ export default function Article() {
         identity,
       },
     });
-    let resp = await defaultEntryActor.get_category(categoryId);
-    let category: any = fromNullable(resp);
-    if (category) {
-      setOldCategory({
-        name: category.name,
-        logo: getImage(category.logo),
-      });
+    try {
+      const resp = await defaultEntryActor.get_category(categoryId); // Fetch category details
+      const category: any = fromNullable(resp); // Ensure safe access to nullable data
+  
+      if (category) {
+        console.log("Fetched Category Data:", category); // Debugging log
+        setOldCategory({
+          name: category.categoryName, // Use backend field for category name
+          logo: await getImage(category.logo), // Fetch logo image
+          description: category.categoryDescription, // Use backend field for description
+        });
+      } else {
+        console.warn("Category not found for ID:", categoryId); // Log missing category
+      }
+    } catch (error) {
+      console.error("Error fetching category data:", error); // Handle errors
+      toast.error("Failed to fetch category details.");
     }
   };
+  
+  
   let getDirectoriesTopCategories = async (reset: boolean = false) => {
     const entryActor = makeEntryActor({
       agentOptions: {
@@ -314,7 +382,6 @@ export default function Article() {
     const newOffset = (event.selected * itemsPerPage) % companyListOfIdSize;
     getCompniesByCategory('', newOffset, itemsPerPage);
   };
-
   const handlefouce = (e: any) => {
     e.preventDefault();
     if (inputRef.current) {
@@ -371,14 +438,71 @@ export default function Article() {
   useEffect(() => {
     pageCount = Math.ceil(companyListOfIdSize / itemsPerPage);
   }, [companyListOfIdSize]);
-  // router.push('/route')
+{/*------List of End --------------*/}
   return (
-    <>
-      <main id='main'>
-        <div className='main-inner web-page manus'>
-          <div className='inner-content'>
-            <Row>
-              <Col xl='12' lg='12' md='12'>
+     <>
+  <style jsx>{`
+    .flex-details-pnl {
+      padding: 15px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .tab-blue-list li {
+      list-style: none;
+      display: inline-block;
+    }
+
+    .tab-blue-list li a {
+      color: #007bff;
+      font-weight: 500;
+    }
+
+    .tab-blue-list li a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-outline-primary {
+      border-color: #007bff;
+      color: #007bff;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      border-color: #ffc107;
+      color: #fff;
+    }
+      .search-input {
+  width: 400px;
+  height: 50px;
+}
+ .category-header {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-transform: uppercase; /* Capitalizes the category */
+}
+
+.category-icon {
+  margin-right: 8px;
+  font-size: 18px;
+  color: #007bff;
+}
+
+.category-results {
+  margin-left: 8px;
+  font-size: 18px;
+  color: #555;
+}
+
+  `}</style>
+
+    <main id='main'>
+    <div className='main-inner web-page'>
+      <div className='inner-content'>
+      <Row>
+      <Col xl='12' lg='12' md='12'>
                 <Breadcrumb className='new-breadcrumb web'>
                   <Breadcrumb.Item>
                     <Link href='/'>
@@ -394,7 +518,7 @@ export default function Article() {
                   {categoryId && (
                     <Breadcrumb.Item active={categoryId ? true : false}>
                       <Link href={`/web3-directory?category=${categoryId}`}>
-                        {OldCategory.name}
+                      {category}
                       </Link>
                     </Breadcrumb.Item>
                   )}
@@ -402,22 +526,26 @@ export default function Article() {
               </Col>
               <Col xl='8' lg='8'>
                
-                <h1 style={{ fontWeight: 700 }}>
-                  {t('List of Web3 Companies')}
-                </h1>
-                <p>
-                  {t(
-                    'Welcome to our Web3 Directory! Your go-to resource for discovering companies working in the fields of blockchain technology, decentralized finance (DeFi), GameFi, NFTs, DAOs, and dApps. Here, you will find the detailed information about each project, including its objectives, technology stack, team, and community. Whether you are an investor, a developer, or simply a Web3 enthusiast, this database is your one-stop destination.Explore a comprehensive list of companies actively contributing to the evolution of the Web3 through blockchain technology. Embark upon the Web3 journey today by listing your project with us.'
-                  )}
-                </p>
-              </Col>
-              <Col xl='4' lg='4' className='text-right'>
+               <h1 style={{ fontWeight: 700 }}>
+                 {t('List of Web3 Companies')}
+               </h1>
+               <p> {companyListSize}
+    {OldCategory.description ? (
+      OldCategory.description
+    ) : (
+      t(
+        "Welcome to our Web3 Directory! Your go-to resource for discovering companies working in the fields of blockchain technology, decentralized finance (DeFi), GameFi, NFTs, DAOs, and dApps."
+      )
+    )}
+  </p>
+             </Col>
+             <Col xl='4' lg='4' className='text-right'>
                
                 <div
                   className='search-post-pnl search-pnl small'
                   id='companySecrch'
                 >
-                  <input
+               <input
                     type='text'
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -431,16 +559,16 @@ export default function Article() {
                       <i className='fa fa-xmark mx-1' />
                     </button>
                   )}
+              
                   <button onClick={searchbtnclicked}>
                     <i className='fa fa-search' />
                   </button>
                 </div>
                 <div className='spacer-30' />
               </Col>
-
               <Col xl='12' lg='12'>
                 <h3>
-                  <Image src={arb} alt='Arb' />
+                  
                   {t('Trending Companies')}
                 </h3>
                 <div className='spacer-30' />
@@ -452,93 +580,75 @@ export default function Article() {
                   <CompanySlider trendingDirectries={trendingDirectries} />
                 )}
               </Col>
-              <Col xl='12' lg='12'>
-                <div className='flex-details-pnl'>
-                  <div className='left-side-pnl'>
-                    <div className='spacer-50' />
-                    <div
-                      style={{
-                        position: 'sticky',
-                        top: '0',
-                        minHeight: '120px',
-                      }}
-                    >
-                      <ul className='faq-btn-list'>
-                        <li>
-                          <Link href={CONTACT_US} className='reg-btn faq-btn'>
-                            {t('FAQ')}
-                          </Link>
-                        </li>
-                        <li>
-                          <Dropdown
-                            onClick={() => setHideMyContent((pre: any) => !pre)}
-                          >
-                            <Dropdown.Toggle
-                              variant='success'
-                              className='fill'
-                              id='dropdown-basic'
-                            >
-                              {t('All Company')}{' '}
-                              {hideMyContent ? (
-                                <i className='fa fa-angle-down' />
-                              ) : (
-                                <i className='fa fa-angle-right' />
-                              )}
-                            </Dropdown.Toggle>
-                          </Dropdown>
-                        </li>
-                      </ul>
-                      <ul
-                        className='tab-blue-list'
-                        style={{ display: hideMyContent ? 'block' : 'none' }}
-                      >
-                        <li>
-                          <Link
-                            className='active'
-                            href='#'
-                            onClick={(e: any) => {
-                              handlefouce(e);
-                              setInputText(t('Search for People'));
-                            }}
-                          >
-                            <i className='fa fa-angle-right' />{' '}
-                            {t('Search for People')}
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            href='#companySecrch'
-                            onClick={(e: any) => {
-                              handlefouce(e);
-                              setInputText(t('Search for Companies'));
-                            }}
-                          >
-                            <i className='fa fa-angle-right' />{' '}
-                            {t('search companies')}
-                          </Link>
-                        </li>
-                      </ul>
-                      <Link
-                        href={ADD_WEB3}
-                        className='reg-btn trans'
-                        style={{
-                          display: hideMyContent ? 'inline-block' : 'none',
-                        }}
-                        // onClick={(e: any) => addcompanyfn(e)}
-                      >
-                        {t('Submit your Listing')}
-                      </Link>
-                    </div>
-                  </div>
+              <Col xl="12" lg="12">
+              <div className="flex-details-pnl d-flex justify-content-between align-items-center py-3 flex-wrap">
+  {/* Left Panel */}
+  <div className="left-side-pnl d-flex align-items-center mb-3 mb-lg-0">
+  <div
+                  className='search-post-pnl search-pnl small'
+                  id='companySecrch'
+                >
+               <input
+                    type='text'
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className='form-control search-input'
+                    placeholder={inputText}
+                    onKeyDown={handleSearch}
+                    ref={inputRef}
+                  />
+                  {search.length >= 1 && (
+                    <button onClick={resetbtnclicked}>
+                      <i className='fa fa-xmark mx-1' />
+                    </button>
+                  )}
+              
+                  <button onClick={searchbtnclicked}>
+                    <i className='fa fa-search' />
+                  </button>
+                </div>
 
-                  <div className='right-detail-pnl'>
+    
+  </div>
+
+  {/* Right Panel */}
+  <div className="right-side-pnl d-flex align-items-center flex-wrap justify-content-end">
+    <Link
+      href={ADD_WEB3}
+      className="btn btn-outline-primary btn-sm me-3 mb-2 mb-lg-0"
+    >
+      {t("Submit your Listing")}
+    </Link>
+    <Link href={CONTACT_US} className="btn btn-warning btn-sm">
+      {t("FAQ")}
+    </Link>
+  </div>
+</div>
+
+</Col>
+
+
+        </Row>
+    <div>
+    <Col>
+  <h3 className="category-header mt-4">
+    <span className="category-icon">
+      <i className="fa fa-sitemap" aria-hidden="true"></i> {/* Icon */}
+    </span>
+    {category.toUpperCase()} <span className="category-results">{companyListSize} results</span>
+  </h3>
+</Col>
+
+     
+</div>
+<div className='right-detail-pnl'>
                     {!categoryId &&
                       results.lenght != 0 &&
                       results.map((company: any, index: string) => {
                         return (
                           company.companyList.length != 0 && (
-                            <div className='slide-cntnr' key={index}>
-                              <h3 className='d-flex'>
+                            <div className='slide-cntnr mt-0' key={index}>
+                              <h3 className='d-flex manu'>
                                 <div
                                   style={{
                                     aspectRatio: profileAspect,
@@ -548,16 +658,14 @@ export default function Article() {
                                   }}
                                   className='me-2'
                                 >
-                                  <Image
-                                    src={
-                                      company.category[1].logo
-                                        ? company.category[1].logo
-                                        : blockchain1
-                                    }
-                                    fill
-                                    alt='Infinity'
-                                    className='rounded-circle'
-                                  />
+                           {/*      <Image
+                        src={ company.category[1]?.logo || blockchain1
+                        }
+                        fill
+                        alt="Infinity"
+                        className="rounded-circle"
+                      />*/}
+
                                 </div>
                                 {company.category[1].name}
                               </h3>
@@ -591,16 +699,16 @@ export default function Article() {
                                   className='me-2'
                                 >
                                  
-                                  <Image
+                               {/*   <Image
                                     src={OldCategory.logo}
                                     fill
                                     alt='Infinity'
                                     className='rounded-circle'
-                                  />
+                                  />*/}
                                 </div>
                                 {OldCategory.name}
                               </h3>
-                              <div className='slid-bg d-flex justify-content-center flex-wrap '>
+                              <div className='d-flex  flex-wrap '>
                                 <Web3ListbyCategoryId
                                   relatedDirectory={companyListOfId}
                                   trendingDirectriesIds={trendingDirectriesIds}
@@ -630,16 +738,9 @@ export default function Article() {
                       </Row>
                     )}
                   </div>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </main>
-      <ConnectModal
-        handleClose={handleConnectModalClose}
-        showModal={showConnectModal}
-      />
-    </>
+</div></div></main>
+</>
   );
-}
+};
+
+export default ClientCategoryPage;
