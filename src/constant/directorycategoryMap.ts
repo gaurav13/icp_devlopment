@@ -1,6 +1,6 @@
 // Define the mapping for category names to category IDs
 export const CATEGORY_MAP: Record<string, string> = {
-    blockchain: "1719578778026731208",
+    blockchain: "1732000863567522348",
     web3: "1732675845005321882",
     metaverse: "1732000863567522350",
     defi: "1732000863567522351",

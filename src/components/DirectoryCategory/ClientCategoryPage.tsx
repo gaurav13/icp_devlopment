@@ -32,11 +32,18 @@ import useSearchParamsHook from '@/components/utils/searchParamsHook';
 import ConnectModal from '@/components/Modal';
 import { isUserConnected } from '@/components/utils/utcToLocal';
 import { ADD_WEB3, CONTACT_US } from '@/constant/routes';
-interface ClientCategoryPageProps {
-  categoryId: string; // The category ID mapped from the category name
-  category: string; // The user-friendly category name
-}
+import Logo from "@/assets/Img/Logo/headerlogo.png"
+import Image from 'next/image';
 
+interface ClientCategoryPageProps {
+  categoryId: string;
+  category: string;
+  categoryData: { 
+    description: string; 
+    logo: string; 
+    banner: string; 
+  }; // Add categoryData to props
+}
 const ClientCategoryPage: React.FC<ClientCategoryPageProps> = ({ categoryId, category }) => {
   const [content, setContent] = useState<string | null>(null);
   const [companyList, setCompanyList] = useState<any[]>([]);
@@ -208,7 +215,9 @@ let addcompanyfn = (e: any) => {
         let category: any = fromNullable(resp);
         let categoryName = 'No Category';
         if (category) {
+          console.log("Fetched Category Data:", category);
           categoryName = category.name;
+         
         }
         web3array[dirc][1].catagory = categoryName;
         web3array[dirc][1].companyBanner = await getImage(
@@ -241,6 +250,7 @@ let addcompanyfn = (e: any) => {
         identity,
       },
     });
+  
     try {
       const resp = await defaultEntryActor.get_category(categoryId); // Fetch category details
       const category: any = fromNullable(resp); // Ensure safe access to nullable data
@@ -248,9 +258,10 @@ let addcompanyfn = (e: any) => {
       if (category) {
         console.log("Fetched Category Data:", category); // Debugging log
         setOldCategory({
-          name: category.categoryName, // Use backend field for category name
-          logo: await getImage(category.logo), // Fetch logo image
-          description: category.categoryDescription, // Use backend field for description
+          name: category.name || "No Name", // Use backend field for category name
+          logo: category.logo || "", // Fetch logo URL
+          banner: category.banner || "", // Fetch banner URL
+          description: category.description || "No Description Available", // Fetch description
         });
       } else {
         console.warn("Category not found for ID:", categoryId); // Log missing category
@@ -260,6 +271,7 @@ let addcompanyfn = (e: any) => {
       toast.error("Failed to fetch category details.");
     }
   };
+  
   
   
   let getDirectoriesTopCategories = async (reset: boolean = false) => {
@@ -527,16 +539,10 @@ let addcompanyfn = (e: any) => {
               <Col xl='8' lg='8'>
                
                <h1 style={{ fontWeight: 700 }}>
-                 {t('List of Web3 Companies')}
+               {OldCategory.name.toUpperCase()}
                </h1>
-               <p> {companyListSize}
-    {OldCategory.description ? (
-      OldCategory.description
-    ) : (
-      t(
-        "Welcome to our Web3 Directory! Your go-to resource for discovering companies working in the fields of blockchain technology, decentralized finance (DeFi), GameFi, NFTs, DAOs, and dApps."
-      )
-    )}
+               <p> 
+    {OldCategory.description}
   </p>
              </Col>
              <Col xl='4' lg='4' className='text-right'>
@@ -629,18 +635,7 @@ let addcompanyfn = (e: any) => {
 
 
         </Row>
-    <div>
-    <Col>
-  <h3 className="category-header mt-4">
-    <span className="category-icon">
-      <i className="fa fa-sitemap" aria-hidden="true"></i> {/* Icon */}
-    </span>
-    {category.toUpperCase()} <span className="category-results">{companyListSize} results</span>
-  </h3>
-</Col>
 
-     
-</div>
 <div className='right-detail-pnl'>
                     {!categoryId &&
                       results.lenght != 0 &&
@@ -658,13 +653,13 @@ let addcompanyfn = (e: any) => {
                                   }}
                                   className='me-2'
                                 >
-                           {/*      <Image
-                        src={ company.category[1]?.logo || blockchain1
-                        }
-                        fill
-                        alt="Infinity"
-                        className="rounded-circle"
-                      />*/}
+                         <Image
+          src={company.category[1].logo}
+          alt="Category Logo"
+          width={80} // Adjust size as necessary
+          height={80}
+          className="rounded-circle"
+        />
 
                                 </div>
                                 {company.category[1].name}
@@ -682,6 +677,7 @@ let addcompanyfn = (e: any) => {
                     {categoryId && (
                       <Row>
                         <Col xxl='12'>
+                     
                           {isGetting ? (
                             <div className='d-flex justify-content-center w-full'>
                               <Spinner />
@@ -699,14 +695,14 @@ let addcompanyfn = (e: any) => {
                                   className='me-2'
                                 >
                                  
-                               {/*   <Image
+                                 <Image
                                     src={OldCategory.logo}
                                     fill
                                     alt='Infinity'
                                     className='rounded-circle'
-                                  />*/}
+                                  />
                                 </div>
-                                {OldCategory.name}
+                                {OldCategory.name.toUpperCase()}<span className="category-results">:{companyListSize} results</span>
                               </h3>
                               <div className='d-flex  flex-wrap '>
                                 <Web3ListbyCategoryId
