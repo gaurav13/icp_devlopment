@@ -56,8 +56,6 @@ export default function Web3ListbyCategoryId({
   border-radius: 8px;
   background: #fff;
   overflow: hidden;
-  max-width: 300px;
-  margin: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -153,7 +151,6 @@ export default function Web3ListbyCategoryId({
           <div
             className='Post-padding '
             key={entry[0]}
-            style={{ maxWidth: '350px' }}
           >
             <Link
   href="#"
@@ -213,7 +210,7 @@ export default function Web3ListbyCategoryId({
           </h3>
           <p className="company-description">
             {entry[1]?.shortDescription.length > 50
-              ? `${entry[1]?.shortDescription.slice(0, 50)}...`
+              ? `${entry[1]?.shortDescription.slice(0, 100)}`
               : entry[1]?.shortDescription ?? ""}
           </p>
         </div>
@@ -230,7 +227,7 @@ export default function Web3ListbyCategoryId({
           alt="Founder Image"
           className="rounded-circle founder-img"
         />
-        <div>
+        <div style={{ marginLeft: '8px' }}>
           <h5 className="founder-name">{entry[1]?.founderName ?? ""}</h5>
           <p className="founder-role">{t("Co-founded")}</p>
         </div>

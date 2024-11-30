@@ -7,4 +7,4 @@ make controller of canister
 dfx canister  update-settings canister_name --add-controller=canister id
 
 command to give super-admin access
-dfx canister call user make_admin '((principal "g73hs-5qwca-p4di3-cmoth-kqtvj-hquul-eyms6-rmhnn-ehiby-2xx63-wqe"),variant{admin})'
+dfx canister call user make_admin '((principal "t2ywc-zawck-fsofp-4xozo-kfx75-l2cea-3jtxf-ssywt-m7x3i-xpzfw-aae"),variant{admin})'
