@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   let categoryData;
 
   try {
-    const response = await fetch(`${siteConfig.aiurl}/categories/${params.category}`);
+    const response = await fetch(`${siteConfig.aiurl}/categories/${params.category}/`);
     
     // Check if the response is JSON
     const contentType = response.headers.get("content-type");
@@ -35,31 +35,72 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       categoryData = {
         name: "Blockchain Directory",
         description: "This Blockchain Directory connects you with companies at the forefront of blockchain technology. Access corporate details, meet innovative teams, and find opportunities to build partnerships that shape the future of decentralized solutions.",
-        logo: "https://blockza.io/category_banner/crypto_banner.jpg",
-        banner: "https://blockza.io/category_banner/crypto_banner.jpg",
+        logo: "https://blockza.io/category_banner/blockchain.jpg",
+        banner: "https://blockza.io/category_banner/blockchain.jpg",
       };
-    } else if (params.category === "nft") {
+    } else if (params.category === "web3") {
       categoryData = {
-        name: "NFT Web3 Directory",
-        description: "Explore the top NFT platforms and projects revolutionizing the digital art world.",
-        logo: "https://blockza.io/category_banner/nft.jpg",
-        banner: "https://blockza.io/category_banner/nft.jpg",
+        name: "Web3 Directory",
+        description: "The Web3 Directory is your ultimate resource for discovering companies leading the decentralized internet revolution. Access corporate information, team profiles, and partnership opportunities to collaborate on transformative Web3 projects.",
+        logo: "https://blockza.io/category_banner/web3.jpg",
+        banner: "https://blockza.io/category_banner/web3.jpg",
       };
-    } else if (params.category === "defi") {
+    } else if (params.category === "cryptocurrency") {
       categoryData = {
-        name: "DeFi Web3 Directory",
-        description: "Find the most innovative DeFi platforms and projects in our comprehensive directory.",
-        logo: "https://blockza.io/category_banner/defi.jpg",
-        banner: "https://blockza.io/category_banner/defi.jpg",
+        name: "Crypto Directory",
+        description: "This Crypto Directory brings you closer to companies revolutionizing the world of cryptocurrencies. Explore their corporate profiles, connect with visionary teams, and discover partnerships to fuel your crypto goals.",
+        logo: "https://blockza.io/category_banner/crypto_currency.jpg",
+        banner: "https://blockza.io/category_banner/crypto_currency.jpg",
       };
     } else if (params.category === "dao") {
       categoryData = {
-        name: "DAO Web3 Directory",
-        description: "Browse the leading decentralized autonomous organizations (DAOs) in the Web3 space.",
+        name: "DAO Directory",
+        description: "Discover leading Decentralized Autonomous Organizations (DAOs) in this DAO Directory. Find corporate details and team insights to connect with DAOs and collaborate on innovative governance models.",
         logo: "https://blockza.io/category_banner/dao.jpg",
         banner: "https://blockza.io/category_banner/dao.jpg",
       };
-    } else {
+    } 
+    else if (params.category === "defi") {
+      categoryData = {
+        name: "DeFi Directory",
+        description: "The DeFi Directory features companies reshaping finance through decentralized solutions. Access their corporate information, meet their teams, and collaborate on projects transforming the financial ecosystem.",
+        logo: "https://blockza.io/category_banner/defi.jpg",
+        banner: "https://blockza.io/category_banner/defi.jpg",
+      };
+    }
+    else if (params.category === "metaverse") {
+      categoryData = {
+        name: "Metaverse Directory",
+        description: "This Metaverse Directory connects you with companies creating immersive digital environments. Access corporate information and team profiles to collaborate on groundbreaking virtual world innovations.",
+        logo: "https://blockza.io/category_banner/metaverse.jpg",
+        banner: "https://blockza.io/category_banner/metaverse.jpg",
+      };
+    }
+    else if (params.category === "nft") {
+      categoryData = {
+        name: "NFT Directory",
+        description: "The NFT Directory helps you connect with companies leading the NFT revolution. Access corporate insights and team details to explore partnerships in art, gaming, and digital ownership.",
+        logo: "https://blockza.io/category_banner/nft.jpg",
+        banner: "https://blockza.io/category_banner/nft.jpg",
+      };
+    }
+    else if (params.category === "blockchain_games") {
+      categoryData = {
+        name: "Blockchain Game Directory",
+        description: "The Blockchain Game Directory connects you with companies merging gaming and blockchain technology. Discover corporate details, meet expert teams, and collaborate on the future of gaming.",
+        logo: "https://blockza.io/category_banner/blockchain_game.jpg",
+        banner: "https://blockza.io/category_banner/blockchain_game.jpg",
+      };
+    }
+    else if (params.category === "nft") {
+      categoryData = {
+        name: "AI Directory: Intelligence Meets Decentralization",
+        description: "This AI Directory introduces you to companies integrating AI with blockchain. Access corporate profiles, connect with teams, and partner on innovative projects driving smarter, decentralized solutions.",
+        logo: "https://blockza.io/category_banner/artificial_Intelligence.jpg",
+        banner: "https://blockza.io/category_banner/artificial_Intelligence.jpg",
+      };
+    }
+    else {
       categoryData = {
         name: `${params.category.charAt(0).toUpperCase()}${params.category.slice(1)} Web3 Directory`,
         description: `Discover top Web3 projects and platforms in the ${params.category} category.`,
@@ -81,8 +122,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       creator: siteConfig.twitterCreator,
     },
     openGraph: {
-      url: `${siteConfig.url}/web3-directory/${params.category}`,
-      title: `${categoryData.name} Companies | BlockZa`,
+      url: `${siteConfig.url}/web3-directory/${params.category}/`,
+      title: `${categoryData.name}  | BlockZa`,
       description: categoryData.description,
       siteName: 'BlockZa',
       images: [categoryData.banner],
@@ -97,7 +138,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   let categoryData;
 
   try {
-    const response = await fetch(`${siteConfig.aiurl}/categories/${params.category}`);
+    const response = await fetch(`${siteConfig.aiurl}/categories/${params.category}/`);
     
     // Ensure the response is JSON
     const contentType = response.headers.get('content-type');

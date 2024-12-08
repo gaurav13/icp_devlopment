@@ -148,7 +148,7 @@ const ClientCategoryPage: React.FC<ClientCategoryPageProps> = ({categoryId,categ
     setAuth: state.setAuth,
     identity: state.identity,
   }));
-  const itemsPerPage = 6;
+  const itemsPerPage = 24;
   let pageCount = Math.ceil(companyListOfIdSize / itemsPerPage);
   // Fetch initial content or metadata
   const fetchCategoryData = async (categoryId: string) => {
@@ -525,8 +525,8 @@ if (categoryId === "1719578778026731208") {
 } else {
   // Fallback metadata if no specific `categoryId` matches
   directoryData = {
-    title: "Default Title | BlockZa",
-    description: "Explore various categories in the Web3 ecosystem, including blockchain, DeFi, NFTs, and more.",
+    title: OldCategory.name, // Removed unnecessary curly braces
+    description: OldCategory.description, // Removed unnecessary curly braces
   };
 }
 

@@ -11,7 +11,7 @@ import bard from '@/assets/Img/Icons/bard.png';
 import tag from '@/assets/Img/Icons/tag.png';
 import usericon from '@/assets/Img/Icons/icon-woman.png';
 import bg from '@/assets/Img/Icons/bg.png';
-import verifyicon from '@/assets/Img/Icons/verify-1.png';
+import verifyicon from '@/assets/Img/Icons/verify-1.gif';
 import unverifyicon from '@/assets/Img/Icons/verify.png';
 import calender from '@/assets/Img/Icons/icon-calender.png';
 import useLocalization from '@/lib/UseLocalization';
@@ -504,7 +504,7 @@ export default function Web3DirectoryDetail({
                               </div>
                             </p>
                           </li>
-                          <li>
+                         {/* <li>
                             <a
                               className='reg-btn blue-btn small'
                               href='#'
@@ -512,11 +512,11 @@ export default function Web3DirectoryDetail({
                             >
                               <i className='fa fa-share-alt' /> {t('Share')}
                             </a>
-                          </li>
+                          </li>*/}
                           {directory.length != 0 && (
                             <li>
                               <a
-                                className='reg-btn yellow small d-flex justify-content-center align-items-center dark'
+                                className='small d-flex justify-content-center align-items-center dark'
                                 href='#'
                               >
                                 {Object.keys(directory[0].status).toString() ==
@@ -830,7 +830,7 @@ export default function Web3DirectoryDetail({
          </div>
                       </div>
                       <div className='full-div'>
-                      <h3>
+                      <h3 className='mt-3'>
                         {LANG === 'jp' ? 'チーム' : 'Team'}
                       </h3>
 
@@ -922,7 +922,6 @@ export default function Web3DirectoryDetail({
                         <Col xxl='5' xl='6' lg='12' md='12'>
                           <h3>
                             <Image src={tag} alt='Bard' /> {t('Trending')}{' '}
-                            {t('companies')}
                           </h3>
                           <div className='spacer-10' />
 

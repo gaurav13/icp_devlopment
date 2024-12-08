@@ -151,8 +151,10 @@ color: #0056b3;
  
 }
 @media (max-width: 767px) { /* For mobile screens */
-  .responsive-banner {
-    margin-left: 25px; /* Aligns the image to the center */
+  .view-more {
+      float: right;
+      margin: -7px;
+      padding-bottom: 5px;
   }
   
 }
@@ -160,3 +162,29 @@ color: #0056b3;
 .slide-cntnr .Post-padding {max-width:inherit !important;flex:1 0 100%;padding:0}
 .slide-cntnr .Post-padding .Product-post{max-width: inherit!important;width:100%}
 }
+.slick-prev,.slick-next
+{ 
+  width: 25px; 
+  height: 25px;
+}
+.slick-prev:before,
+.slick-next:before {
+  content: ''; /* Keep it empty for custom arrow */
+  display: block;
+  border: solid #000; /* Apply the custom color */
+  border-width: 3px 3px 0 0; /* Bold border for the arrow */
+  width: 10px; /* Adjust arrow size */
+  height: 10px;
+  margin: 2px 8px;
+}
+
+.slick-prev:before {
+  transform: rotate(-135deg); /* Arrow pointing left */
+}
+
+.slick-next:before {
+  transform: rotate(45deg); /* Arrow pointing right */
+}
+.companypostshort p{text-align: left;}
+.company-description{text-align: left;}
+.company-name{text-align: left;}
