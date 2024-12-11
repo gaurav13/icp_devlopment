@@ -8,10 +8,11 @@ import Link from 'next/link';
 import talwaar from '@/assets/Img/Icons/talwaar.png';
 import iconthumb from '@/assets/Img/Icons/icon-thumb.png';
 import bard from '@/assets/Img/Icons/bard.png';
-import tag from '@/assets/Img/Icons/tag.png';
+import tag from '@/assets/Img/Icons/diamond.gif';
+//import tag from '@/assets/Img/Icons/tag.png';
 import usericon from '@/assets/Img/Icons/icon-woman.png';
 import bg from '@/assets/Img/Icons/bg.png';
-import verifyicon from '@/assets/Img/Icons/verify-1.gif';
+import verifyicon from '@/assets/Img/Icons/verify-1.png';
 import unverifyicon from '@/assets/Img/Icons/verify.png';
 import calender from '@/assets/Img/Icons/icon-calender.png';
 import useLocalization from '@/lib/UseLocalization';
@@ -470,7 +471,7 @@ export default function Web3DirectoryDetail({
                         </div>
                         <ul className='inline-list'>
                           <li>
-                            <a
+                            <a style={{ position: 'relative', top: '-1px' }}
                               href='#'
                               className='mr-3'
                               onClick={(e) => {
@@ -515,8 +516,8 @@ export default function Web3DirectoryDetail({
                           </li>*/}
                           {directory.length != 0 && (
                             <li>
-                              <a
-                                className='small d-flex justify-content-center align-items-center dark'
+                              <a style={{ position: 'relative', top: '-4px' }}
+                                className='small text-success d-flex justify-content-center align-items-center dark'
                                 href='#'
                               >
                                 {Object.keys(directory[0].status).toString() ==
@@ -921,7 +922,7 @@ export default function Web3DirectoryDetail({
                       <Row>
                         <Col xxl='5' xl='6' lg='12' md='12'>
                           <h3>
-                            <Image src={tag} alt='Bard' /> {t('Trending')}{' '}
+                            <Image  style={{ marginRight: "0px", maxWidth: "35px" }}  src={tag} alt='Bard' /> {t('Trending')}{' '}
                           </h3>
                           <div className='spacer-10' />
 

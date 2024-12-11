@@ -7,7 +7,7 @@ make controller of canister
 dfx canister  update-settings canister_name --add-controller=canister id
 
 command to give super-admin access
-dfx canister call user make_admin '((principal "25kyc-dxeim-76so5-w7iru-fuolf-w554d-pg3iy-xgoxg-jvy5f-6ik52-xae"),variant{admin})'
+dfx canister call user make_admin '((principal "5t6jv-4e54b-aa3jr-zijzu-kg23r-uw46o-dsxho-7wkak-vir4b-vc3ub-xae"),variant{admin})'
 /home/main_website/ICP_PRO_NFTSTUDIO24/canister_ids.json
 npm run genploy --canister=entry
 npm run genploy --canister=user
@@ -20,8 +20,18 @@ npm run genploy --canister=subscriber
     subscriber: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=avqkn-guaaa-aaaaa-qaaea-cai
     user: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=bd3sg-teaaa-aaaaa-qaaba-cai
 	
-collection: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=be2us-64aaa-aaaaa-qaabq-cai
+ DIP721: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=a4tbr-q4aaa-aaaaa-qaafq-cai
+    DIP721_JP: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=ajuq4-ruaaa-aaaaa-qaaga-cai
+    collection: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=be2us-64aaa-aaaaa-qaabq-cai
+    comment: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=a3shf-5eaaa-aaaaa-qaafa-cai
+    comment_JP: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=c5kvi-uuaaa-aaaaa-qaaia-cai
+    comment_SG: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=c2lt4-zmaaa-aaaaa-qaaiq-cai
+    english: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=ctiya-peaaa-aaaaa-qaaja-cai
     entry: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=bkyz2-fmaaa-aaaaa-qaaaq-cai
+    entry_JP: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=cuj6u-c4aaa-aaaaa-qaajq-cai
+    entry_SG: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=cbopz-duaaa-aaaaa-qaaka-cai
+    icp_ledger_canister: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=cgpjn-omaaa-aaaaa-qaakq-cai
+    internet_identity: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=asrmz-lmaaa-aaaaa-qaaeq-cai
     subscriber: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=avqkn-guaaa-aaaaa-qaaea-cai
     user: http://127.0.0.1:8000/?canisterId=by6od-j4aaa-aaaaa-qaadq-cai&id=bd3sg-teaaa-aaaaa-qaaba-cai
 npm run genploy --canister=entry
@@ -30,9 +40,12 @@ npm run genploy --canister=collection
 npm run genploy --canister=comment
 npm run genploy --canister=subscriber
 
-dfx collection  update-settings entry --add-controller=be2us-64aaa-aaaaa-qaabq-cai
-dfx entry  update-settings entry --add-controller=bkyz2-fmaaa-aaaaa-qaaaq-cai
-dfx subscriber  update-settings entry --add-controller=avqkn-guaaa-aaaaa-qaaea-cai
-dfx user  update-settings entry --add-controller=bd3sg-teaaa-aaaaa-qaaba-cai
+dfx canister  update-settings collection --add-controller=be2us-64aaa-aaaaa-qaabq-cai
+dfx canister  update-settings entry --add-controller=a3shf-5eaaa-aaaaa-qaafa-cai
+dfx  canister update-settings subscriber --add-controller=avqkn-guaaa-aaaaa-qaaea-cai
+dfx canister  update-settings user --add-controller=bd3sg-teaaa-aaaaa-qaaba-cai
+dfx canister  update-settings comment --add-controller=bkyz2-fmaaa-aaaaa-qaaaq-cai
+dfx canister --network ic update-settings collection --add-controller be2us-64aaa-aaaaa-qaabq-cai
 
+dfx deploy internet_identity
 npm run genploy --canister=ephemeral

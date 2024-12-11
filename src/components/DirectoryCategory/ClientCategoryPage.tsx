@@ -6,7 +6,7 @@ import { Row, Col, Breadcrumb, Dropdown, Spinner } from 'react-bootstrap';
 import Link from 'next/link';
 import useLocalization from '@/lib/UseLocalization';
 import { LANG } from '@/constant/language';
-import arb from '@/assets/Img/Icons/arb.png';
+import arb from '@/assets/Img/Icons/diamond.gif';
 import blockchain1 from '@/assets/Img/sidebar-icons/icon-blockchain-1.png';
 import Defi1 from '@/assets/Img/sidebar-icons/icon-defi-1.png';
 import Doa1 from '@/assets/Img/sidebar-icons/icon-dao-1.png';
@@ -619,7 +619,7 @@ if (categoryId === "1719578778026731208") {
               </Col>
               <Col xl='12' lg='12'>
                 <h3>
-                  
+                <Image  style={{ marginRight: "0px", maxWidth: "35px" }}  src={arb} alt='Arb' />
                   {t('Trending Companies')}
                 </h3>
                 <div className='spacer-30' />

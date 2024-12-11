@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useLocalization from '@/lib/UseLocalization';
 import { LANG } from '@/constant/language';
-import arb from '@/assets/Img/Icons/arb.png';
+import arb from '@/assets/Img/Icons/diamond.gif';
 import blockchain1 from '@/assets/Img/sidebar-icons/icon-blockchain-1.png';
 import Defi1 from '@/assets/Img/sidebar-icons/icon-defi-1.png';
 import Doa1 from '@/assets/Img/sidebar-icons/icon-dao-1.png';
@@ -397,9 +397,40 @@ export default function Article() {
   useEffect(() => {
     pageCount = Math.ceil(companyListOfIdSize / itemsPerPage);
   }, [companyListOfIdSize]);
-  if (categoryId === '1719578778026731208') {
-    redirect('/web3-directory/blockchain/');
-  }
+  if (categoryId === "1732000863567522348") {
+    redirect("/web3_directory/blockchain/");
+  } else if (categoryId === "1718641230817970431") {
+    redirect("/web3_directory/web3/");
+  } else if (categoryId === "1718641722539268658") {
+    redirect("/web3_directory/metaverse/");
+  } else if (categoryId === "1719210427243611048") {
+    redirect("/web3_directory/defi/");
+  } else if (categoryId === "1718968029182069160") {
+    redirect("/web3_directory/nft/");
+  } else if (categoryId === "1719210909413102943") {
+    redirect("/web3_directory/blockchain_games/");
+  } else if (categoryId === "1719211072131510431") {
+    redirect("/web3_directory/dao/");
+  } else if (categoryId === "1718645044417924753") {
+    redirect("/web3_directory/artificial_intelligence/");
+  } else if (categoryId === "1719210557164450999") {
+    redirect("/web3_directory/cryptocurrency/");
+  } else if (categoryId === "1733372612188333953") {
+    redirect("/web3_directory/crypto_casinos/");
+  } else if (categoryId === "1719996329928054919") {
+    redirect("/web3_directory/crypto_exchange/");
+  } else if (categoryId === "1733811680276587369") {
+    redirect("/web3_directory/metaverse_event/");
+  } else if (categoryId === "1733812308626822422") {
+    redirect("/web3_directory/decentralized_identity/");
+  } else if (categoryId === "1733812196425088158") {
+    redirect("/web3_directory/play_to_earn_platform/");
+  } else if (categoryId === "1733812098678890519") {
+    redirect("/web3_directory/yield_aggregators/");
+  } else if (categoryId === "1733812032008771908") {
+    redirect("/web3_directory/stablecoins/");
+  } 
+  
   const totalCompanies = results.reduce(
     (sum: number, company: any) => sum + company.companyList.length,
     0
@@ -413,16 +444,23 @@ export default function Article() {
 
   const getCategoryLinkById = (categoryId) => {
     const web3categories = [
+      { name: "blockchain", id: "1732000863567522348" },
       { name: "web3", id: "1718641230817970431" },
-      { name: "blockchain", id: "1718641457527889243" },
-      { name: "cryptocurrency", id: "1719210557164450999" },
-      { name: "defi", id: "1719210427243611048" },
-      { name: "dao", id: "1719211072131510431" },
-      { name: "nft", id: "1718968029182069160" },
       { name: "metaverse", id: "1718641722539268658" },
+      { name: "defi", id: "1719210427243611048" },
+      { name: "nft", id: "1718968029182069160" },
       { name: "blockchain_games", id: "1719210909413102943" },
+      { name: "dao", id: "1719211072131510431" },
       { name: "artificial_intelligence", id: "1718645044417924753" },
-    ];
+      { name: "cryptocurrency", id: "1719210557164450999" },
+      { name: "crypto_casinos", id: "1733372612188333953" },
+      { name: "crypto_exchange", id: "1719996329928054919" },
+      { name: "metaverse_event", id: "1733811680276587369" },
+      { name: "decentralized_identity", id: "1733812308626822422" },
+      { name: "play_to_earn_platform", id: "1733812196425088158" },
+      { name: "yield_aggregators", id: "1733812098678890519" },
+      { name: "stabelcoins", id: "1733812032008771908" },
+    ];    
     
     const category = web3categories.find((cat) => cat.id === categoryId);
     if (category) {
@@ -517,7 +555,7 @@ export default function Article() {
 
               <Col xl='12' lg='12'>
                 <h3>
-                  <Image src={arb} alt='Arb' />
+                  <Image  style={{ marginRight: "0px", maxWidth: "35px" }}  src={arb} alt='Arb' />
                   {t('Trending Companies')}
                 </h3>
                 <div className='spacer-30' />

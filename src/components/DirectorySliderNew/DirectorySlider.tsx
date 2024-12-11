@@ -174,12 +174,14 @@ export default React.memo(function DirectorySlider({
         console.log("Subcategory IDs:", children);
 
         // Map subcategory IDs to their corresponding data
-        const subcategories = children.reduce(
+        const flattenedChildren = children.flat(); // Flatten the array to handle nested IDs
+
+        const subcategories = flattenedChildren.reduce(
           (acc: { [key: string]: string }, subcategoryId: string) => {
             const subcategory = allCategories.find(
               ([id]: [string, any]) => String(id) === String(subcategoryId)
             );
-
+        
             if (subcategory) {
               acc[subcategory[1].name || "Unnamed Subcategory"] = subcategoryId;
             } else {
@@ -187,11 +189,12 @@ export default React.memo(function DirectorySlider({
                 `Subcategory with ID ${subcategoryId} not found in allCategories.`
               );
             }
-
+        
             return acc;
           },
           {}
         );
+        
 
         console.log("Formatted Subcategories JSON:", subcategories);
 
@@ -341,7 +344,10 @@ export default React.memo(function DirectorySlider({
                 key={entry[0]}
               >
                 
-                <Link
+               
+                  <div className="card">
+    {/* Company Banner */}
+    <Link
                   href='#'
                   onClick={(e) => {
                     e.preventDefault();
@@ -358,8 +364,6 @@ export default React.memo(function DirectorySlider({
                   }}
                   className='Product-post direc'
                 >
-                  <div className="card">
-    {/* Company Banner */}
     <div className="card-image">
       <Image
         src={entry[1]?.companyBanner ?? tempimg}
@@ -377,19 +381,33 @@ export default React.memo(function DirectorySlider({
           {t("Trending")}
         </p>
       )}
-    </div>
-    <div>
-      {Object.keys(subcategories).length > 0 ? (
-        <ul>
-          {Object.entries(subcategories).map(([name, id]) => (
-            <li key={id}>{name}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No subcategories available.</p>
-      )}
-    </div>
-
+    </div> </Link>
+    <div style={{ padding: "10px" }}>
+  {/* Add padding around the container */}
+  {Object.keys(subcategories).length > 0 && (
+    <ul className="list-unstyled d-flex flex-wrap gap-2" style={{ margin: 0, padding: 0 }}>
+      {Object.entries(subcategories).map(([name, id]) => (
+        <li key={id}>
+          {/* Add a Link for each subcategory */}
+          <Link
+            href={`/web3-directory/?category=${id}`}
+            className="inline-flex items-center shadow border border-solid rounded px-2 py-1 leading-3  text-decoration-none"
+            style={{
+              borderColor: "#1e5fb3", // Border color
+              color: "#1e5fb3", // Text color
+              borderRadius: "4px", // Slight rounding
+              textAlign: "center",
+              background: "#ffc1073b", // Semi-transparent yellow background
+              fontSize: "12px", // Font size
+            }}
+          >
+            {name}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
     <div className="card-body">
       <div className="company-header">
         <div className="company-logo">
@@ -402,11 +420,27 @@ export default React.memo(function DirectorySlider({
           />
         </div>
         <div className="company-details">
-          <h3 className="company-name">
+        <Link
+                  href='#'
+                  onClick={(e) => {
+                    e.preventDefault();
+
+                    openArticleLink(
+                      entry[1].isStatic
+                        ? `${DIRECTORY_STATIC_PATH + entry[0]}`
+                        : `${
+                            entry.length != 0
+                              ? DIRECTORY_DINAMIC_PATH + entry[0]
+                              : DIRECTORY_DINAMIC_PATH + '#'
+                          }`
+                    );
+                  }}
+                  className='Product-post direc'
+                ><h3 className="company-name">
             {entry[1]?.company.length > 15
               ? `${entry[1]?.company.slice(0, 15)}...`
               : entry[1]?.company ?? ""}
-          </h3>
+          </h3></Link>
           <p className="company-description">
             {entry[1]?.shortDescription.length > 50
               ? `${entry[1]?.shortDescription.slice(0, 250)}`
@@ -434,7 +468,7 @@ export default React.memo(function DirectorySlider({
     </div>
   </div>
 
-                </Link>
+          
               </div>
             );
           })}
