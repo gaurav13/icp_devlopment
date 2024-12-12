@@ -51,36 +51,42 @@ const ClientCategoryPage: React.FC<ClientCategoryPageProps> = ({categoryId,categ
   useEffect(() => {
     // Fetch additional data or update state if required
     const fetchCategoryDetails = async () => {
-      const defaultEntryActor = makeEntryActor({
-        agentOptions: {},
-      });
-      interface OldCategoryType {
-        name: string;
-        logo: string;
-        banner: string;
-        description: string;
-      }
-      const [OldCategory, setOldCategory] = useState<OldCategoryType>({
-        name: '',
-        logo: '',
-        banner: '',
-        description: '',
-      });
-            
+      const defaultEntryActor = makeEntryActor({ agentOptions: {} });
       try {
-        const resp = await defaultEntryActor.get_category(categoryId);
-        const categoryResponse = resp || {};
+        const resp = await fetchWithRetry(() => defaultEntryActor.get_category(categoryId), 3);
+    
+        if (!resp || typeof resp !== "object") {
+          console.warn("Invalid response for category ID:", categoryId);
+          setOldCategory((prev) => ({
+            ...prev,
+            name: "",
+            logo: "",
+            banner: "",
+            description: "",
+          }));
+          return;
+        }
+    
         setOldCategory((prev) => ({
           ...prev,
-          name: categoryResponse.name || prev.name,
-          logo: categoryResponse.logo || prev.logo,
-          banner: categoryResponse.banner || prev.banner,
-          description: categoryResponse.description || prev.description,
+          name: resp.name || "No Name",
+          logo: resp.logo || "",
+          banner: resp.banner || "",
+          description: resp.description || "No description available.",
         }));
       } catch (error) {
-        console.error("Error fetching additional category data:", error);
+        console.error("Error fetching category data:", error);
+       // toast.error("Failed to fetch category data.");
+        setOldCategory((prev) => ({
+          ...prev,
+          name: "",
+          logo: "",
+          banner: "",
+          description: "",
+        }));
       }
     };
+    
 
     fetchCategoryDetails();
   }, [categoryId]);
@@ -160,38 +166,40 @@ const ClientCategoryPage: React.FC<ClientCategoryPageProps> = ({categoryId,categ
   const fetchCompaniesByCategory = async (page: number = 0) => {
     setLoading(true);
     try {
-      const entryActor = makeEntryActor({
-        agentOptions: {}, // Adjust options if needed
-      });
-
+      const entryActor = makeEntryActor({ agentOptions: {} });
       const tempWeb3 = await entryActor.getWeb3ListOfAllUsers(
         categoryId,
-        '', // Add any search terms here if needed
+        "", // Add search terms if required
         page,
         itemsPerPage
       );
-
-      const companies = tempWeb3?.web3List || [];
-      const totalCompanies = parseInt(tempWeb3?.amount || '0', 10);
-      setCompanyListSize(totalCompanies);
-
+  
+      if (!tempWeb3 || !Array.isArray(tempWeb3.web3List)) {
+        console.warn("Invalid or empty response for companies:", tempWeb3);
+        toast.warn("Failed to fetch companies.");
+        setCompanyList([]);
+        return;
+      }
+  
+      const companies = tempWeb3.web3List;
       const processedCompanies = await Promise.all(
-        companies.map(async (company: any) => {
-          company[1].companyBanner = await getImage(company[1].companyBanner);
-          company[1].founderImage = await getImage(company[1].founderImage);
-          company[1].companyLogo = await getImage(company[1].companyLogo);
-          return company;
-        })
+        companies.map(async (company: any) => ({
+          ...company,
+          companyBanner: await getImage(company[1]?.companyBanner || ""),
+          founderImage: await getImage(company[1]?.founderImage || ""),
+          companyLogo: await getImage(company[1]?.companyLogo || ""),
+        }))
       );
-
+  
       setCompanyList(processedCompanies);
     } catch (error) {
-      console.error('Error fetching companies:', error);
-      toast.error('Error fetching companies.');
+      console.error("Error fetching companies by category:", error);
+    //  toast.error("Error fetching companies.");
     } finally {
       setLoading(false);
     }
   };
+  
 
   // Handle page changes
 
@@ -313,7 +321,7 @@ let addcompanyfn = (e: any) => {
       }
     } catch (error) {
       console.error("Error fetching category data:", error); // Handle errors
-      toast.error("Failed to fetch category details.");
+     // toast.error("Failed to fetch category details.");
     }
   };
   

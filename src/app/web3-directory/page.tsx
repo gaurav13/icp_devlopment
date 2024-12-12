@@ -300,39 +300,92 @@ export default function Article() {
     // const promted = await entryActor.getPromotedEntries();
     // logger(promted, 'PROMTED ENTRIES');
   };
-  let getWeb3ByCategory = async (catagoryId: string, reset?: boolean) => {
+  let getWeb3ByCategory = async (categoryId: string, reset?: boolean) => {
     const entryActor = makeEntryActor({
       agentOptions: {
         identity,
       },
     });
-
-    let TempDirectory = [];
-    let tempWeb3 = await entryActor.getWeb3ListOfAllUsers(
-      catagoryId,
-      reset ? '' : search,
-      0,
-      10
-    );
-    if (tempWeb3?.web3List?.length != 0) {
-      // let web3array = tempWeb3.web3List.filter((e:string)=>e[0]!=directoryId);
-      let web3array = tempWeb3.web3List;
-
-      for (let dirc = 0; dirc < web3array.length; dirc++) {
-        web3array[dirc][1].companyBanner = await getImage(
-          web3array[dirc][1].companyBanner
+  
+    try {
+      let TempDirectory = [];
+  
+      // Fetch all categories to find subcategories
+      const categoryResp = await entryActor.get_list_categories("", 0, 100, false);
+      const allCategories = categoryResp.entries || [];
+  
+      // Find parent category
+      const parentCategory = allCategories.find(
+        ([id]: [string, any]) => id === categoryId
+      );
+  
+      if (!parentCategory) {
+        console.warn(`Parent category with ID ${categoryId} not found.`);
+        return [];
+      }
+  
+      // Get subcategory IDs
+      const subcategoryIds = parentCategory[1]?.children?.flat() || [];
+      console.log(`Subcategories for parent category (${categoryId}):`, subcategoryIds);
+  
+      // Fetch Web3 companies for parent category
+      console.log(`Fetching companies for parent category (${categoryId})...`);
+      const parentCompaniesResp = await entryActor.getWeb3ListOfAllUsers(
+        categoryId,
+        reset ? "" : search,
+        0,
+        10
+      );
+      const parentCompanies = parentCompaniesResp?.web3List || [];
+      console.log(`Parent category companies (${categoryId}):`, parentCompanies);
+  
+      // Fetch Web3 companies for each subcategory
+      const subcategoryCompanies = await Promise.all(
+        subcategoryIds.map(async (subcategoryId: string) => {
+          const resp = await entryActor.getWeb3ListOfAllUsers(
+            subcategoryId,
+            reset ? "" : search,
+            0,
+            10
+          );
+          console.log(`Companies for subcategory (${subcategoryId}):`, resp?.web3List);
+          return resp?.web3List || [];
+        })
+      );
+  
+      // Flatten subcategory company results
+      const allSubcategoryCompanies = subcategoryCompanies.flat();
+  
+      // Combine parent and subcategory companies
+      const allCompanies = [...parentCompanies, ...allSubcategoryCompanies];
+      console.log(`Combined companies (parent + subcategories):`, allCompanies);
+  
+      // Process images for all companies
+      for (let dirc = 0; dirc < allCompanies.length; dirc++) {
+        allCompanies[dirc][1].companyBanner = await getImage(
+          allCompanies[dirc][1].companyBanner
         );
-        web3array[dirc][1].founderImage = await getImage(
-          web3array[dirc][1].founderImage
+        allCompanies[dirc][1].founderImage = await getImage(
+          allCompanies[dirc][1].founderImage
         );
-        web3array[dirc][1].companyLogo = await getImage(
-          web3array[dirc][1].companyLogo
+        allCompanies[dirc][1].companyLogo = await getImage(
+          allCompanies[dirc][1].companyLogo
         );
       }
-      TempDirectory = web3array;
+  
+      // Update TempDirectory with the combined results
+      TempDirectory = allCompanies;
+  
+      return TempDirectory;
+    } catch (error) {
+      console.error("Error fetching companies for category and subcategories:", error);
+      return [];
     }
-    return TempDirectory;
   };
+  
+  
+  
+  
   const handlePageClick = async (event: any) => {
     // setIsGetting(true);
 
@@ -436,7 +489,7 @@ export default function Article() {
     0
   );
   results.forEach((company) => {
-    console.log("Current Company Object:", company); // Debug: Log the full company objec
+    console.log("Current Company Object:", company.companyList); // Debug: Log the full company objec
     
   });
   

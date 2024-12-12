@@ -384,30 +384,34 @@ export default React.memo(function DirectorySlider({
     </div> </Link>
     <div style={{ padding: "10px" }}>
   {/* Add padding around the container */}
+  
   {Object.keys(subcategories).length > 0 && (
     <ul className="list-unstyled d-flex flex-wrap gap-2" style={{ margin: 0, padding: 0 }}>
-      {Object.entries(subcategories).map(([name, id]) => (
-        <li key={id}>
-          {/* Add a Link for each subcategory */}
-          <Link
-            href={`/web3-directory/?category=${id}`}
-            className="inline-flex items-center shadow border border-solid rounded px-2 py-1 leading-3  text-decoration-none"
-            style={{
-              borderColor: "#1e5fb3", // Border color
-              color: "#1e5fb3", // Text color
-              borderRadius: "4px", // Slight rounding
-              textAlign: "center",
-              background: "#ffc1073b", // Semi-transparent yellow background
-              fontSize: "12px", // Font size
-            }}
-          >
-            {name}
-          </Link>
-        </li>
-      ))}
+      {Object.entries(subcategories)
+        .filter(([_, id]) => entry[1]?.catagory === id) // Filter condition
+        .map(([name, id]) => (
+          <li key={id}>
+            {/* Add a Link for each subcategory */}
+            <Link
+              href={`/web3-directory/?category=${id}`}
+              className="inline-flex items-center shadow border border-solid rounded px-2 py-1 leading-3 text-decoration-none"
+              style={{
+                borderColor: "#1e5fb3", // Border color
+                color: "#1e5fb3", // Text color
+                borderRadius: "4px", // Slight rounding
+                textAlign: "center",
+                background: "#ffc1073b", // Semi-transparent yellow background
+                fontSize: "12px", // Font size
+              }}
+            >
+              {name}
+            </Link>
+          </li>
+        ))}
     </ul>
   )}
 </div>
+
     <div className="card-body">
       <div className="company-header">
         <div className="company-logo">
