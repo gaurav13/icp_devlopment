@@ -250,50 +250,81 @@ let addcompanyfn = (e: any) => {
         identity,
       },
     });
-
-    let TempDirectory = null;
-    let tempWeb3 = await entryActor.getWeb3ListOfAllUsers(
-      categoryId,
-      searchString,
-      pageCount,
-      itemsPerPage
-    );
-    let amountOfcompany = parseInt(tempWeb3?.amount);
-    setCompanyListOfIdSize(amountOfcompany);
-    if (tempWeb3?.web3List?.length != 0) {
-      let web3array = tempWeb3.web3List;
-
-      for (let dirc = 0; dirc < web3array.length; dirc++) {
-        let resp = await entryActor.get_category(web3array[dirc][1].catagory);
-        let category: any = fromNullable(resp);
-        let categoryName = 'No Category';
-        if (category) {
-          console.log("Fetched Category Data:", category);
-          categoryName = category.name;
-         
-        }
-        web3array[dirc][1].catagory = categoryName;
-        web3array[dirc][1].companyBanner = await getImage(
-          web3array[dirc][1].companyBanner
+  
+    try {
+      let TempDirectory: any[] = [];
+      // Fetch parent category details
+      const categoryResp = await entryActor.get_category(categoryId);
+      const parentCategory = fromNullable(categoryResp);
+  
+      if (!parentCategory) {
+        console.warn(`Parent category with ID ${categoryId} not found.`);
+        setCompanyListOfId([]);
+        return;
+      }
+  
+      // Fetch companies for the parent category
+      let parentCompaniesResp = await entryActor.getWeb3ListOfAllUsers(
+        categoryId,
+        searchString,
+        pageCount,
+        itemsPerPage
+      );
+      const parentCompanies = parentCompaniesResp?.web3List || [];
+  
+      // Fetch subcategory IDs
+      const subcategoryIds = parentCategory.children?.[0] || [];
+      console.log(`Subcategories for parent category (${categoryId}):`, subcategoryIds);
+  
+      // Fetch companies for subcategories
+      const subcategoryCompanies = await Promise.all(
+        subcategoryIds.map(async (subcategoryId: string) => {
+          const subResp = await entryActor.getWeb3ListOfAllUsers(
+            subcategoryId,
+            searchString,
+            0,
+            itemsPerPage
+          );
+          console.log(`Companies for subcategory (${subcategoryId}):`, subResp?.web3List);
+          return subResp?.web3List || [];
+        })
+      );
+  
+      // Combine parent and subcategory companies
+      const allSubcategoryCompanies = subcategoryCompanies.flat();
+      const allCompanies = [...parentCompanies, ...allSubcategoryCompanies];
+  
+      console.log(`Combined companies (parent + subcategories):`, allCompanies);
+  
+      // Process images for all companies
+      for (let dirc = 0; dirc < allCompanies.length; dirc++) {
+        allCompanies[dirc][1].companyBanner = await getImage(
+          allCompanies[dirc][1].companyBanner
         );
-        web3array[dirc][1].founderImage = await getImage(
-          web3array[dirc][1].founderImage
+        allCompanies[dirc][1].founderImage = await getImage(
+          allCompanies[dirc][1].founderImage
         );
-        web3array[dirc][1].companyLogo = await getImage(
-          web3array[dirc][1].companyLogo
+        allCompanies[dirc][1].companyLogo = await getImage(
+          allCompanies[dirc][1].companyLogo
         );
       }
-      TempDirectory = web3array.sort(
+  
+      // Sort companies by likes
+      TempDirectory = allCompanies.sort(
         (f: any, l: any) => Number(l[1].likes) - Number(f[1].likes)
       );
-    }
-    if (TempDirectory) {
+  
+      // Update the state with the combined results
       setCompanyListOfId(TempDirectory);
-    } else {
+      setCompanyListOfIdSize(TempDirectory.length);
+    } catch (error) {
+      console.error("Error fetching companies for category and subcategories:", error);
       setCompanyListOfId([]);
+    } finally {
+      setIsGetting(false);
     }
-    setIsGetting(false);
   };
+  
   const getCategory = async () => {
     if (!categoryId) {
       return;
@@ -795,6 +826,7 @@ if (categoryId === "1719578778026731208") {
                               <div className='d-flex info-comp-wrap flex-wrap '>
                                 <Web3ListbyCategoryId
                                   relatedDirectory={companyListOfId}
+                                  categoryId={categoryId}
                                 />
                               </div>
                             </div>
