@@ -51,6 +51,9 @@ import MarketSentimentChart  from '@/components/MediaGraph/LineChart';
 import NewsComponent  from '@/components/googlenews/news';
 import LinkndindataComponent  from '@/components/linkendindata/linkndindata';
 import DirectoryModelPopup from '@/components/DirectoryModelPopup/DirectoryModelPopup';
+import '../../styles/directory_detail.css'; 
+import { FaEnvelope, FaLinkedin,FaTwitter,FaUsers,FaNewspaper,FaBuilding,FaCheckCircle} from 'react-icons/fa';
+import { MdLocationCity } from "react-icons/md";
 export default function Web3DirectoryDetail({
   directoryId,
 }: {
@@ -377,8 +380,11 @@ export default function Web3DirectoryDetail({
           margin-right: 10px; /* Adjust spacing as needed */
         }
 
-          @media (max-width: 576px) {
-        .left-side-pnl{display:none}
+        @media (max-width: 576px) {
+        .faq-btn-list{display:none}
+        .tab-blue-list{display:none!important}
+        .submit-listing{display:none!important}
+        .premium_company{ grid-template-columns: 1fr;}
         }
       `}</style>
       <main id='main'>
@@ -469,6 +475,7 @@ export default function Web3DirectoryDetail({
                             
                           </div>
                         </div>
+     
                         <ul className='inline-list'>
                           <li>
                             <a style={{ position: 'relative', top: '-1px' }}
@@ -556,11 +563,11 @@ export default function Web3DirectoryDetail({
                                     />{' '}
                                   </div>
                                 )}
-                                {Object.keys(directory[0].status).toString() ==
+                                <strong>{Object.keys(directory[0].status).toString() ==
                                 'un_verfied'
                                   ? t('Unverified')
                                   : t('Verified')}
-                              </a>
+                              </strong></a>
                             </li>
                           )}
                         </ul>
@@ -677,7 +684,7 @@ export default function Web3DirectoryDetail({
                 handleShowContactModal();
               }}
             >
-               {t('Contact')}{' '}
+               {t('Book Your Meeting Now')}{' '}
             </Link>
             <DirectoryModelPopup show={showContactModal} handleClose={handleCloseContactModal}  companyName={directory[0]?.company} />
 
@@ -798,17 +805,39 @@ export default function Web3DirectoryDetail({
                         style={{
                           display: hideMyContent ? 'inline-block' : 'none',
                         }}
-                        className='reg-btn trans'
+                        className='reg-btn trans submit-listing'
                       >
                         {t('Submit your Listing')}
                       </Link>
+                      {!isLoading && (
+            
+            <div className='premium_company mt-2'>
+              <div className='' />
+              <div className=''>
+                    <h3 className='text-primary'>
+                      <Image  style={{ marginRight: "0px", maxWidth: "35px" }}  src={tag} alt='Bard' /> {t('Trending')}{' '}
+                    </h3>
+                    <div className='spacer-10' />
+
+                    <CompanyListSidebar />
+                    <Link className='grey-link' href='/web3-directory'>
+                      {t('View more')} {t('Suggestion')}{' '}
+                      <i className='fa fa-long-arrow-right' />
+                    </Link>
+                  
+              
+              </div>
+            </div>
+          
+        )}
+            </div>
                     </div>
-                  </div>
+                   
                   {!isLoading && (
                     <div className='right-detail-pnl pr'>
                                       
                       <h3>
-                        <Image src={bard} alt='Bard' /> {t('Company Detail')}
+                      <FaBuilding size={25} color="#1e5fb3" /> <i class="bi bi-buildings"></i> {t('Company Detail')}
                       </h3>
                       <div className='spacer-20' />
                       <div>
@@ -831,7 +860,7 @@ export default function Web3DirectoryDetail({
          </div>
                       </div>
                       <div className='full-div'>
-                      <h3 className='mt-3'>
+                      <h3 className='mt-3'><span><FaUsers size={25} color="#1e5fb3" />&nbsp;</span>
                         {LANG === 'jp' ? 'チーム' : 'Team'}
                       </h3>
 
@@ -897,7 +926,7 @@ export default function Web3DirectoryDetail({
 </div></>}
                       <div className='slide-cntnr'>
                         <h3>
-                          <Image src={talwaar} alt='Infinity' />
+                        <MdLocationCity size={25} color="#1e5fb3" />
                           {t('Similar Companies of')} {" "}
                           {directory.length != 0 ? directory[0]?.catagoryName : ''}
                         </h3>
@@ -914,29 +943,7 @@ export default function Web3DirectoryDetail({
                 <div className='spacer-40' />
               </Col>
 
-              {!isLoading && (
-                <Col xxl='12' xl='12' lg='12' md='12'>
-                  <div className='flex-details-pnl'>
-                    <div className='left-side-pnl' />
-                    <div className='right-detail-pnl pr'>
-                      <Row>
-                        <Col xxl='5' xl='6' lg='12' md='12'>
-                          <h3>
-                            <Image  style={{ marginRight: "0px", maxWidth: "35px" }}  src={tag} alt='Bard' /> {t('Trending')}{' '}
-                          </h3>
-                          <div className='spacer-10' />
-
-                          <CompanyListSidebar />
-                          <Link className='grey-link' href='/web3-directory'>
-                            {t('View more')} {t('Suggestion')}{' '}
-                            <i className='fa fa-long-arrow-right' />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
-                </Col>
-              )}
+              
             </Row>
           </div>
         </div>

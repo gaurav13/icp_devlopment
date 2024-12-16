@@ -68,6 +68,7 @@ import { BUYTOKENS } from '@/constant/routes';
 import ConfirmationModel from '@/components/Modal/ConfirmationModel';
 import { MINIMUM_TOKEN_TRANSFER } from '@/constant/validations';
 import GlobalSearch from '@/components/GlobalContent/SearchModal';
+import LanguageBtn from '@/components/LanguageBtn/LanguageBtn';
 export default function Connect({
   hideRewards,
   hideUser,
@@ -508,6 +509,9 @@ export default function Connect({
     <>
       <ul className='side-btnlist'>
         <li>{route !== 'super-admin' && <GlobalSearch />}</li>
+        <li> <span className='lngcontainer'>
+                  <LanguageBtn id='navbarLngBtn' />
+                </span></li>
         {isLoading ? (
           <li className='remove'>
             <div className='loader-container'>

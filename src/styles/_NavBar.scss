@@ -29,7 +29,7 @@
   .navbar.new {
     display: inline-block;
     left: 220px;
-    text-align: center;
+    text-align: center;margin-top:33px
   }
   .navbar-expand-lg.new .navbar-collapse {
     justify-content: center;
@@ -42,7 +42,7 @@
   }
   .navbar.new .navbar-brand {
     margin-right: 0;
-    margin-bottom: 30px;
+    margin-bottom: 0;
     display: inline-block;
     width: 230px;
     img {
@@ -131,10 +131,8 @@
     }
   }
   .side-btnlist {
-    position: absolute;
-    right: 5%;
-    top: 50px;
-    z-index: 2;
+    margin-bottom:0;
+    gap:10px;
     display: flex;
     align-items: center;
     @media (max-width: 991px) {
@@ -150,7 +148,7 @@
     }
     li {
       display: inline-block;
-      margin-left: 15px;
+  
       @media (max-width: 1600px) {
         &.remove {
           display: none;
@@ -239,12 +237,12 @@
     color: $black;
     font-size: 16px;
     font-weight: 600;
-    margin-right: 10px;
+    white-space:nowrap;
     position: relative;
     font-family: $inter;
     z-index: 2;
-    padding: 10px 30px 12px;
-    @include bd-radius(5px);
+    padding:8px 20px;
+    @include bd-radius(25rem);
     background-color: $color;
     color: $black;
     border: none;
@@ -1364,7 +1362,7 @@ main.dark {
 .navbar.new .side-btnlist {
   .link-btn {
     @media (max-width: 991px) {
-      margin-left: 10px;
+    
     }
   }
 }
@@ -1459,3 +1457,4 @@ main.dark {
     }
   }
 }
+.navbar-inner{display:flex;align-items:center}

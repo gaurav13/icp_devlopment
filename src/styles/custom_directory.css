@@ -188,3 +188,26 @@ color: #0056b3;
 .companypostshort p{text-align: left;}
 .company-description{text-align: left;}
 .company-name{text-align: left;}
+
+.info-box {
+  background-color: #f8f9fa; /* Light gray background */
+  border: 1px solid #e0e0e0; /* Border for boxes */
+  padding: 20px; /* Spacing inside boxes */
+  text-align: center; /* Center align content */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+}
+.btn-custom {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+.btn-custom:hover {
+  background-color: #0056b3;
+}

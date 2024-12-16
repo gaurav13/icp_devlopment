@@ -821,7 +821,7 @@ if (categoryId === "1719578778026731208") {
                                   />
                                 </div>
                                 {OldCategory.name.charAt(0).toUpperCase() + OldCategory.name.slice(1).toLowerCase()}<span className="category-results">
-                                <i className="fa fa-angle-right"></i> {companyListSize} results</span>
+                                <i className="fa fa-angle-right"></i> {companyListOfIdSize} results</span>
                               </h3>
                               <div className='d-flex info-comp-wrap flex-wrap '>
                                 <Web3ListbyCategoryId

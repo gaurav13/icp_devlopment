@@ -451,37 +451,37 @@ export default function Article() {
     pageCount = Math.ceil(companyListOfIdSize / itemsPerPage);
   }, [companyListOfIdSize]);
   if (categoryId === "1732000863567522348") {
-    redirect("/web3_directory/blockchain/");
+    redirect("/web3-directory/blockchain/");
   } else if (categoryId === "1718641230817970431") {
-    redirect("/web3_directory/web3/");
+    redirect("/web3-directory/web3/");
   } else if (categoryId === "1718641722539268658") {
-    redirect("/web3_directory/metaverse/");
+    redirect("/web3-directory/metaverse/");
   } else if (categoryId === "1719210427243611048") {
-    redirect("/web3_directory/defi/");
+    redirect("/web3-directory/defi/");
   } else if (categoryId === "1718968029182069160") {
-    redirect("/web3_directory/nft/");
+    redirect("/web3-directory/nft/");
   } else if (categoryId === "1719210909413102943") {
-    redirect("/web3_directory/blockchain_games/");
+    redirect("/web3-directory/blockchain_games/");
   } else if (categoryId === "1719211072131510431") {
-    redirect("/web3_directory/dao/");
+    redirect("/web3-directory/dao/");
   } else if (categoryId === "1718645044417924753") {
-    redirect("/web3_directory/artificial_intelligence/");
+    redirect("/web3-directory/artificial_intelligence/");
   } else if (categoryId === "1719210557164450999") {
-    redirect("/web3_directory/cryptocurrency/");
+    redirect("/web3-directory/cryptocurrency/");
   } else if (categoryId === "1733372612188333953") {
-    redirect("/web3_directory/crypto_casinos/");
+    redirect("/web3-directory/crypto_casinos/");
   } else if (categoryId === "1719996329928054919") {
-    redirect("/web3_directory/crypto_exchange/");
+    redirect("/web3-directory/crypto_exchange/");
   } else if (categoryId === "1733811680276587369") {
-    redirect("/web3_directory/metaverse_event/");
+    redirect("/web3-directory/metaverse_event/");
   } else if (categoryId === "1733812308626822422") {
-    redirect("/web3_directory/decentralized_identity/");
+    redirect("/web3-directory/decentralized_identity/");
   } else if (categoryId === "1733812196425088158") {
-    redirect("/web3_directory/play_to_earn_platform/");
+    redirect("/web3-directory/play_to_earn_platform/");
   } else if (categoryId === "1733812098678890519") {
-    redirect("/web3_directory/yield_aggregators/");
+    redirect("/web3-directory/yield_aggregators/");
   } else if (categoryId === "1733812032008771908") {
-    redirect("/web3_directory/stablecoins/");
+    redirect("/web3-directory/stablecoins/");
   } 
   
   const totalCompanies = results.reduce(
@@ -573,11 +573,15 @@ export default function Article() {
                 <h1 style={{ fontWeight: 700 }}>
                   {t('List of Web3 Companies')}
                 </h1>
-                <p>
+   
+               
+
+   
+                {<p>
                   {t(
                     'Welcome to our Web3 Directory! Your go-to resource for discovering companies working in the fields of blockchain technology, decentralized finance (DeFi), GameFi, NFTs, DAOs, and dApps. Here, you will find the detailed information about each project, including its objectives, technology stack, team, and community. Whether you are an investor, a developer, or simply a Web3 enthusiast, this database is your one-stop destination.Explore a comprehensive list of companies actively contributing to the evolution of the Web3 through blockchain technology. Embark upon the Web3 journey today by listing your project with us.'
                   )}
-                </p>
+                </p>}
               </Col>
               <Col xl='4' lg='4' className='text-right'>
                
@@ -620,6 +624,45 @@ export default function Article() {
                   <CompanySlider trendingDirectries={trendingDirectries} />
                 )}
               </Col>
+              <h2 className="text-center pt-4">How to use Web3 Directory</h2>
+              <div className="row">
+  <div className="col-md-4 d-flex">
+    <div className="info-box flex-grow-1 d-flex flex-column">
+      <h5>1. Find the Right Partner</h5>
+      <p>
+        Discover the ideal partner that aligns with your needs and project
+        requirements. Select the category that best suits your interest to
+        connect with the right experts.
+      </p>
+    </div>
+  </div>
+  <div className="col-md-4 d-flex">
+    <div className="info-box flex-grow-1 d-flex flex-column">
+      <h5>2. Connect with the Team</h5>
+      <p>
+        Join us as a corporate member and reach out directly to the partner
+        using the contact form available in their profile.
+      </p>
+      <button className="btn btn-primary mt-auto">
+        Apply for corporate account
+      </button>
+    </div>
+  </div>
+  <div className="col-md-4 d-flex">
+    <div className="info-box flex-grow-1 d-flex flex-column">
+      <h5>3. Build Your Partnership</h5>
+      <p>
+        Set up a meeting to discuss your project and explore opportunities
+        for collaboration and growth.
+      </p>
+    </div>
+  </div>
+</div>
+
+      <p className="text-center mt-4">
+        Need help? Can’t find the right partner? Create your account now and
+        connect with the perfect match for your business!
+      </p>
               <Col xl="12" lg="12">
               <div className="flex-details-pnl d-flex justify-content-between align-items-center py-3 flex-wrap border-0">
   {/* Left Panel */}

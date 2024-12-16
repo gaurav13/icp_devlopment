@@ -15,7 +15,7 @@ import logger from '@/lib/logger';
 import useLocalization from '@/lib/UseLocalization';
 import { LANG } from '@/constant/language';
 import useSearchParamsHook from '@/components/utils/searchParamsHook';
-import LanguageBtn from '@/components/LanguageBtn/LanguageBtn';
+
 import { CAMPAIGNS, EVENTS, PRESSRELEASE } from '@/constant/routes';
 
 export default function NavBarNew() {
@@ -179,9 +179,7 @@ export default function NavBarNew() {
             <div className='navbar-inner'>
               {/* <Container fluid> */}
               <Navbar.Brand>
-                <span className='d-none d-lg-block lngcontainer'>
-                  <LanguageBtn id='navbarLngBtn' />
-                </span>
+                
                 <Link href='/'>
                   <Image src={logo} alt='Blockza' />
                   <Image src={logo2} alt='Blockza' />
@@ -288,7 +286,9 @@ export default function NavBarNew() {
 
                 {/* <div id='google_translate_element' className='width-80'/> */}
 
-                <div className='d-flex'>
+                
+              </Navbar.Collapse>
+              <div className='d-flex pe-3'>
                   <Button
                     className={`themebtn ${isThemeActive ? 'active' : ''}`}
                     onClick={() => {
@@ -301,8 +301,8 @@ export default function NavBarNew() {
                   </Button>
 
                   <Connect hideUser />
+                 
                 </div>
-              </Navbar.Collapse>
             </div>
           </Navbar>
         </>

@@ -6,7 +6,10 @@ import logger from '@/lib/logger';
 import useLocalization from '@/lib/UseLocalization';
 import { LANG } from '@/constant/language';
 import { makeEntryActor } from '@/dfx/service/actor-locator';
-
+import {
+  DIRECTORY_DINAMIC_PATH,
+  DIRECTORY_STATIC_PATH,
+} from '@/constant/routes';
 export default function Web3ListbyCategoryId({
   relatedDirectory,
   trendingDirectriesIds,

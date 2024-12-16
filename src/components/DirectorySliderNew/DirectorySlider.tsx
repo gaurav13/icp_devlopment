@@ -211,6 +211,9 @@ export default React.memo(function DirectorySlider({
       });
     }
   }, [categoryId]);
+  const slugify = (name: string) => {
+    return name.toLowerCase().replace(/\s+/g, '_').replace(/[^\w_]/g, '');
+  };
   return (
     <>
     <style jsx>{`
@@ -391,7 +394,7 @@ export default React.memo(function DirectorySlider({
         .filter(([_, id]) => entry[1]?.catagory === id) // Filter condition
         .map(([name, id]) => (
           <li key={id}>
-            {/* Add a Link for each subcategory */}
+            {/* Add a Link for each subcategory ${slugify(name)} */}
             <Link
               href={`/web3-directory/?category=${id}`}
               className="inline-flex items-center shadow border border-solid rounded px-2 py-1 leading-3 text-decoration-none"
