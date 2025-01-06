@@ -28,8 +28,8 @@
 @media (min-width: 992px) {
   .navbar.new {
     display: inline-block;
-    left: 220px;
-    text-align: center;margin-top:33px
+    left: 0;
+    text-align: center;margin-top:0;position:sticky;top:0;width:100%
   }
   .navbar-expand-lg.new .navbar-collapse {
     justify-content: center;
@@ -45,21 +45,20 @@
     margin-bottom: 0;
     display: inline-block;
     width: 230px;
+    padding-left:20px;
     img {
-      width: 230px;
+      width: 100%;
     }
   }
-  .navbar.new.navbar-expand-lg .navbar-nav {
-    justify-content: center;
-  }
+  
 }
 .navbar.new {
   @media (max-width: 991px) {
     left: 0px;
-    padding-left: 15px;
+    padding-left: 0;
     padding-right: 15px;
     z-index: 999;
-    padding-top: 10px;
+    padding-top: 0;
 
     &:before {
       position: absolute;
@@ -86,7 +85,7 @@
     }
   }
   @media (max-width: 991px) {
-    padding-top: 20px;
+    padding-top:0;
   }
   @media (max-width: 575px) {
     padding-right: 0;
@@ -182,7 +181,7 @@
   left: 0;
   right: 0;
   top: 0;
-  padding: 5px 0 5px;
+  padding: 0;
   background: $white !important;
   z-index: 99;
   @include animation-anime(Navanime, 1s, linear);
@@ -1458,3 +1457,18 @@ main.dark {
   }
 }
 .navbar-inner{display:flex;align-items:center}
+.bg-top{background:#38383d;padding:.5rem 1rem}
+.top-bar-wrap{color:#fff;font-size:13px;text-align:center;display:grid;grid-template-columns: 1fr auto;
+justify-content: center;}
+.top-bar-wrap span{color:#ffde59}
+.top-bar-wrap span.orange{color:#ff914d}
+.top-bar-content{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+@media (min-width: 992px){
+  .sidebar-home.new{top:100px;padding-top:15px;border-right: 1px solid #eeeeee;}
+  .navbar-nav {padding-left:10px}
+}
+@media (max-width: 991.98px){
+  .navbar.new .navbar-brand{margin-left:60px}
+  .navbar .navbar-collapse .navbar-nav{padding-left:1rem}
+  .navbar.new .side-btnlist li:nth-child(2){display:none}
+}

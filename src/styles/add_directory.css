@@ -75,7 +75,7 @@
 }
 
 .form-container .btn {
-  background-color: #007bff; /* Primary blue */
+  background-color: #1e5fb3; /* Primary blue */
   color: #ffffff;
   border: none;
   padding: 10px 15px;
@@ -242,3 +242,16 @@
   font-size: 0.9rem; /* Adjust font size */
 }
 .required_icon{color: '#000'; fontSize: '1.2rem'; marginLeft: '4px'}
+
+.blue-text-color{color:'#1e5fb3'}
+.text-14{font-size: 14px;}
+main .main-inner.admin-main {
+  padding-top: 0px;
+}
+.form-select {
+  font-size: 14px !important;
+}
+@media (max-width: 768px) {
+  .directory-section{padding-top: 100px;}
+
+}

@@ -239,7 +239,7 @@ export default function PendingList() {
     !userAuth.isAdminBlocked && (
       <>
         <main id='main' className='dark'>
-          <div className='main-inner admin-main'>
+          <div className='main-inner admin-main ch'>
             <Head>
               <title>Hi</title>
             </Head>

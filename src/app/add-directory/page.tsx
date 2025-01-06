@@ -35,7 +35,7 @@ import { CropperProps } from '@/types/cropper';
 import ImageCropper from '@/components/Cropper';
 import getCroppedImg from '@/components/Cropper/cropImage';
 import resizeImage from '@/components/utils/resizeImage';
-import getCategories from '@/components/utils/getCategories';
+import getCategories from '@/components/utils/getDirectorycategories';
 import uploadImage from '@/components/utils/uploadImage';
 import { getImage } from '@/components/utils/getImage';
 import {  getIdFromUrl } from '@/constant/DateFormates';
@@ -543,25 +543,51 @@ export default function AddCompanyForm() {
     }
   
   }, [auth, identity]);
-
+  useEffect(() => {
+    async function getData() {
+      try {
+        const _categories = await getCategories(identity);
+        console.log('Fetched categories:', _categories); // Debug log
+        const formattedCategories = _categories.map((entry: any) => {
+          if (Array.isArray(entry) && entry.length > 1) {
+            const [id, data] = entry;
+            return {
+              id,
+              name: data.name,
+              isChild: data.isChild,
+              parentCategoryId: data.parentCategoryId || [],
+            };
+          }
+          return null; // Skip invalid entries
+        }).filter(Boolean); // Remove null values
+        setCategories(formattedCategories);
+      } catch (error) {
+        console.error('Error fetching categories:', error); // Log any errors
+      }
+    }
+    getData();
+  }, [identity]);
+  
+  
+  
+  
   return (
     <>
       <main id='main' className='dark'>
-        <div className='main-inner admin-main'>
+        <div className='main-inner'>
           
-          <div className='section admin-inner-pnl' id='top'>
-          <div className="container  py-4">
+          <div className='section admin-inner-pnl directory-section' id='top'>
+          <div className="container-fluid">
           <Row>
         {/* Left Column */}
         <Col md={8} className="text-start">
-          <h3>
-            <strong>Get Your Web3 Project in Front of the Right People—For Free!</strong>
-          </h3>
-          <p>
+          <h1 style={{color:'#1e5fb3'}} className='blue-title'>
+           Get Your Web3 Project in Front of the Right People—For Free!</h1>
+          <p className='text-14'>
             Join Blockza's Web3 Directory, the go-to platform for blockchain innovators to shine. 
             Gain global visibility, connect with industry leaders, and build trust in the Web3 space—all at no cost.
           </p>
-          <ul>
+          <ul className='text-14'>
             <li>
               <strong>Showcase Your Brand:</strong> Highlight your company, team, achievements, and media exposure.
             </li>
@@ -573,9 +599,9 @@ export default function AddCompanyForm() {
               <span className="text-muted"> (Paid Option)</span>
             </li>
           </ul>
-          <a
+          <a style={{color:'#1e5fb3'}} 
             href="https://blockza.io"
-            className="text-primary fw-bold"
+            className="blue-text-color fw-bold"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -589,21 +615,21 @@ export default function AddCompanyForm() {
           <div className="contact-card p-3 shadow-sm rounded">
             <h6 className="fw-bold mb-2">📧 Contact the sales team</h6>
             <a
-              href="mailto:advertising@dappradar.com"
-              className="text-primary fw-bold"
+              href="mailto:support@blockza.io"
+              className="blue-text-color fw-bold"
             >
-              support@blockza.com
+              support@blockza.io
             </a>
           </div>
 
-          <div className="mt-3 p-3 shadow-sm rounded d-flex align-items-center justify-content-between">
+          {/*<div className="mt-3 p-3 shadow-sm rounded d-flex align-items-center justify-content-between">
             <div>
               <h6 className="mb-0">BlockZa Sales Kit</h6>
             </div>
             <a href="#" className="btn btn-light btn-sm">
               <i className="fa fa-download" />
             </a>
-          </div>
+          </div>*/}
         </Col>
     
       </Row></div>
@@ -631,7 +657,7 @@ export default function AddCompanyForm() {
               }}
             >
               {({ errors, touched, handleChange, handleBlur }) => (
-       <div className="container py-4"><div className="row"><div className="form-container col-md-8">
+       <div className="container-fluid py-4"><div className="row"><div className="form-container col-md-8">
        <FormikForm
                   className='flex flex-col items-center justify-center px-3'
                   // onChange={(e) => handleImageChange(e)}
@@ -900,7 +926,7 @@ export default function AddCompanyForm() {
   {({ field }: any) => (
     <Form.Group className='mb-2'>
         <Form.Label>
-        {t('Feature directory')}
+        {t('Promote your Directory Listing')}
                                       <Tippy
                                         content={
                                           <div>
@@ -921,19 +947,23 @@ export default function AddCompanyForm() {
     
 <div className='d-flex'>
 
-              <label className='d-flex align-items-center'>
+              <label className='text-14 d-flex align-items-center'>
                 <Field type="radio" name="discord" value="yes" className="me-2"/>
                 {t('Yes')}
               </label>
           
-              <label className='d-flex align-items-center ms-3'>
+              <label className='text-14 d-flex align-items-center ms-3'>
                 <Field type="radio" name="discord" value="no" className="me-2"/>
                 {t('No')}
               </label>
-           
-            <ErrorMessage name="discord" component="div" />
-            
 
+
+            <ErrorMessage name="discord" component="div" />
+
+</div>
+<div style={{ fontSize: '12px',color: '#1e5fb3', lineHeight: '1.2', marginTop: '5px' }}>
+  Are you interested in promoting your project or arranging meetings with
+  experts for business partnerships or consultations?
 </div>
      
 
@@ -1021,29 +1051,52 @@ export default function AddCompanyForm() {
                   </Row>
                   <Row>
                     <Col xl='12' lg='12' md='12' className='mb-3'>
-                      <Field name='catagory'>
-                        {({ field, form }: any) => (
-                          <Form.Group className='mb-2'>
-                            <Form.Label>{t('Category')} <span className='required_icon'>*</span></Form.Label>
-                            <Form.Select
-                              value={field.value}
-                              onChange={handleChange}
-                              onInput={handleChange}
-                              name='catagory'
-                            >
-                              <option value={''}>
-                                {t('Please Select Category')}
-                              </option>
-                              {categories &&
-                                categories.map((category: any, index) => (
-                                  <option value={category[0]} key={index}>
-                                    {category[1].name}
-                                  </option>
-                                ))}
-                            </Form.Select>
-                          </Form.Group>
-                        )}
-                      </Field>
+                    <Field name="catagory">
+  {({ field, form }: any) => {
+    const isError = form.errors.category && form.touched.category; // Check validation error
+    return (
+      <Form.Group className="mb-2">
+        <Form.Label>
+          {t('Category')} <span className={`required_icon ${isError ? 'required' : ''}`}>*</span>
+        </Form.Label>
+        <Form.Select
+          value={field.value || ''}
+          onChange={(e) => {
+            form.setFieldValue(field.name, e.target.value);
+          }}
+          onBlur={() => form.setFieldTouched(field.name, true)}
+          name='catagory'
+          className={isError ? 'is-invalid' : 'form-control'}
+        >
+          <option value="">{t('Please Select Category')}</option>
+          {categories &&
+            categories.map((category: any, index: number) => (
+              <React.Fragment key={index}>
+                {category && category.name && !category.isChild && (
+                  <option value={category.id}>{category.name}</option>
+                )}
+                {categories
+                  .filter(
+                    (subcategory: any) =>
+                      subcategory.isChild &&
+                      subcategory.parentCategoryId?.includes(category.id)
+                  )
+                  .map((subcategory: any, subIndex: number) => (
+                    <option key={subIndex} value={subcategory.id}>
+                      &nbsp;&nbsp;— {subcategory.name}
+                    </option>
+                  ))}
+              </React.Fragment>
+            ))}
+        </Form.Select>
+        {isError && <div className="text-danger">{form.errors.category}</div>}
+      </Form.Group>
+    );
+  }}
+</Field>
+
+
+
 
                       <div className='text-danger mb-2'>
                         <ErrorMessage
@@ -1055,7 +1108,7 @@ export default function AddCompanyForm() {
                     </Col>
                     <Row>
   {/* Screenshot 1 */}
-  <Col xl="4" lg="4" md="4" sm="12" className="mb-4">
+  <Col xl="4" lg="4"  sm="12" className="mb-4">
   <div className="mb-2 text-center">
     <h6 className="fw-bold">{t("Company Logo")} <span className='required_icon'>*</span></h6>
   </div>
@@ -1084,7 +1137,7 @@ export default function AddCompanyForm() {
       />
       <label
         htmlFor="previewweb3companylogo"
-        className="btn btn-primary btn-sm"
+        className="btn button-color btn-primary btn-sm"
       >
         {t("Browse files")}
       </label>
@@ -1102,7 +1155,7 @@ export default function AddCompanyForm() {
 
 
   {/* Screenshot 2 */}
-  <Col xl="4" lg="4" md="4" sm="12" className="mb-4">
+  <Col xl="4" lg="4" sm="12" className="mb-4">
   <div className="mb-2 text-center">
     <h6 className="fw-bold">{t("Founder Image")} <span className='required_icon'>*</span></h6>
   </div>
@@ -1129,7 +1182,7 @@ export default function AddCompanyForm() {
         type="file"
         onChange={(e) => handleImageChageCommon(e, "founder")}
       />
-      <label htmlFor="previewweb3Img" className="btn btn-primary btn-sm">
+      <label htmlFor="previewweb3Img" className="btn button-color btn-primary btn-sm">
         {t("Browse files")}
       </label>
     </Form.Group>
@@ -1144,7 +1197,7 @@ export default function AddCompanyForm() {
 
 
   {/* Screenshot 3 */}
-  <Col xl="4" lg="4" md="4" sm="12" className="mb-4">
+  <Col xl="4" lg="4" sm="12" className="mb-4">
   <div className="mb-2 text-center">
     <h6 className="fw-bold">{t("Company Banner")} <span className='required_icon'>*</span></h6>
   </div>
@@ -1173,7 +1226,7 @@ export default function AddCompanyForm() {
       />
       <label
         htmlFor="previewweb3companyBannerImg"
-        className="btn btn-primary btn-sm"
+        className="btn button-color btn-primary btn-sm"
       >
         {t("Browse files")}
       </label>
@@ -1188,10 +1241,73 @@ export default function AddCompanyForm() {
 </Col>
 
 </Row>
+<Col xl="12" lg="12" md="12" className="mb-3">
+  {/* Custom Checkbox Section */}
+  <div className="mb-3">
+    <h5 className="fw-bold blue-text-color text-start">
+      {t("Promoting your Project & Referral Programs")}
+    </h5>
+
+    <div className="d-flex align-items-start mb-2">
+      <Form.Check.Input
+        type="checkbox"
+        id="promoteDapp"
+        className="me-2 mt-1"
+      />
+      <span className="text-14 text-start">
+        {t(
+          "Are you interested in promoting your project or arranging meetings with experts for business partnerships or consultations?"
+        )}
+      </span>
+    </div>
+
+    <div className="d-flex align-items-start mb-2">
+      <Form.Check.Input
+        type="checkbox"
+        id="affiliateProgram"
+        className="me-2 mt-1"
+      />
+      <span className="text-14 text-start">
+        {t("Does your project have an affiliate program?")}
+      </span>
+    </div>
+
+    <div className="d-flex align-items-start mb-2">
+      <Form.Check.Input
+        type="checkbox"
+        id="termsOfUse"
+        className="me-2 mt-1"
+      />
+      <span className="text-14 text-start">
+        {t("I've read the")}{" "}
+        <Link href="/terms-of-use/" className="blue-text-color fw-bold text-start">
+          {t("Terms of use")}
+        </Link>{" "}
+        {t("and I agree to be bound by the provisions indicated therein.")}
+      </span>
+    </div>
+
+    <div className="d-flex align-items-start mb-2">
+      <Form.Check.Input
+        type="checkbox"
+        id="privacyPolicy"
+        className="me-2 mt-1"
+      />
+      <span className="text-14 text-start">
+        {t("I've read and accept the")}{" "}
+        <Link href="/privacy-policy/" className="blue-text-color fw-bold">
+          {t("Privacy Policy")}
+        </Link>{" "}
+        {t("of BlockZa.")}
+      </span>
+    </div>
+  </div>
+</Col>
+
 
                     <Col xl='12' lg='12' md='12' className='mb-4'>
                       <Button
-                        className='w-100 reg-btn blue-btn'
+                        className='w-100 reg-btn blue-btn button-color'
                         disabled={isWeb3Submitting}
                         onClick={(e) => submitWeb3form(e)}
                       >

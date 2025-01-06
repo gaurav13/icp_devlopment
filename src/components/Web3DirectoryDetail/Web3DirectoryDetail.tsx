@@ -52,8 +52,9 @@ import NewsComponent  from '@/components/googlenews/news';
 import LinkndindataComponent  from '@/components/linkendindata/linkndindata';
 import DirectoryModelPopup from '@/components/DirectoryModelPopup/DirectoryModelPopup';
 import '../../styles/directory_detail.css'; 
-import { FaEnvelope, FaLinkedin,FaTwitter,FaUsers,FaNewspaper,FaBuilding,FaCheckCircle} from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin,FaTwitter,FaUsers,FaNewspaper,FaBuilding,FaCheckCircle,FaCheck} from 'react-icons/fa';
 import { MdLocationCity } from "react-icons/md";
+import { MessageSquare, Share, ThumbsUp, Info } from 'lucide-react'
 export default function Web3DirectoryDetail({
   directoryId,
 }: {
@@ -369,7 +370,7 @@ export default function Web3DirectoryDetail({
         }
           /* Reduce the size of icons in the specific list */
         .small-icons i {
-          font-size: 20px; /* Adjust the size as per your requirement */
+          font-size: 17px; /* Adjust the size as per your requirement */
           line-height: 1;
           width: auto; /* Ensure the icon's width adapts */
           height: auto;
@@ -467,110 +468,91 @@ export default function Web3DirectoryDetail({
                             />
                           </div>
                           <div className='txt-pnl'>
-                            <h1 style={{ fontSize: '18px', fontWeight: 600 }}>
+                            <h1 title="Submit Your Project to the Web3 Directory and Gain Unmatched Exposure!" style={{ fontSize: '18px', fontWeight: 600 }}>
                               {directory.length != 0
                                 ? directory[0].company
                                 : ''}
-                            </h1>
-                            
+                              <span className='ps-1'><Info size={20} /></span></h1>
+                            <ul
+  className="inline-list d-flex align-items-center justify-content-between p-1 rounded shadow-sm"
+  style={{
+    backgroundColor: "rgb(239 239 239)", // Light red shade
+    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)",
+    margin: "0",
+    borderRadius: "8px",
+    gap: "8px",
+    flexWrap: "nowrap", // Prevent wrapping
+    overflowX: "auto", // Allow horizontal scroll if needed
+  }}
+>
+  {/* Like Button */}
+  <li className="d-flex align-items-center">
+    <a
+      href="#"
+      className="d-flex align-items-center text-decoration-none"
+      onClick={(e) => {
+        e.preventDefault();
+        likeDirectory();
+      }}
+    >
+      <i
+        className="fa fa-thumbs-up me-1"
+        style={{ color: "#e74c3c", fontSize: "14px" }}
+      />
+      <span className="text-muted fw-bold" style={{ fontSize: "12px" }}>
+        {formatLikesCount(likeCount)} Likes
+      </span>
+    </a>
+  </li>
+
+  {/* Views */}
+  <li className="d-flex align-items-center">
+    <i
+      className="fa fa-eye me-1"
+      style={{ color: "#3498db", fontSize: "14px" }}
+    />
+    <span className="text-muted fw-bold" style={{ fontSize: "12px" }}>
+      {directory[0]
+        ? formatLikesCount(parseInt(directory[0]?.views))
+        : 0}{" "}
+      Views
+    </span>
+  </li>
+
+  {/* Verified */}
+  {directory.length !== 0 && (
+    <li className="d-flex align-items-center">
+      <div
+        className="rounded-circle d-flex justify-content-center align-items-center me-1"
+        style={{
+          width: "14px",
+          height: "14px",
+          backgroundColor: "#5cb85c",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <i
+          className="fa fa-check"
+          style={{ color: "#fff", fontSize: "10px" }}
+        />
+      </div>
+      <span
+        className="fw-bold"
+        style={{ color: "#5cb85c", fontSize: "12px" }}
+      >
+        Verified
+      </span>
+    </li>
+  )}
+</ul>
+
+
+
+
                           </div>
                         </div>
      
-                        <ul className='inline-list'>
-                          <li>
-                            <a style={{ position: 'relative', top: '-1px' }}
-                              href='#'
-                              className='mr-3'
-                              onClick={(e) => {
-                                e.preventDefault();
-                                likeDirectory();
-                              }}
-                            >
-                              <Image
-                                src={`${
-                                  isliked
-                                    ? '/images/liked.svg'
-                                    : '/images/like.svg'
-                                }`}
-                                width={30}
-                                height={25}
-                                alt='Icon Thumb'
-                              />{' '}
-                              {formatLikesCount(likeCount)}
-                            </a>
-                          </li>
-                          <li>
-                            <p className=''>
-                              <div className='viewbox'>
-                                <i className='fa fa-eye fill blue-icon fa-lg me-1' />
-                                {t('Views')} <span className='mx-1'>|</span>
-                                {directory[0]
-                                  ? formatLikesCount(
-                                      parseInt(directory[0]?.views)
-                                    )
-                                  : 0}
-                              </div>
-                            </p>
-                          </li>
-                         {/* <li>
-                            <a
-                              className='reg-btn blue-btn small'
-                              href='#'
-                              onClick={copyDirectoryLink}
-                            >
-                              <i className='fa fa-share-alt' /> {t('Share')}
-                            </a>
-                          </li>*/}
-                          {directory.length != 0 && (
-                            <li>
-                              <a style={{ position: 'relative', top: '-4px' }}
-                                className='small text-success d-flex justify-content-center align-items-center dark'
-                                href='#'
-                              >
-                                {Object.keys(directory[0].status).toString() ==
-                                'un_verfied' ? (
-                                  // <i className='fa fa-circle-xmark me-2 fs-5'/>
-                                  <div
-                                    style={{
-                                      aspectRatio: profileAspect,
-                                      position: 'relative',
-                                      height: '20px',
-                                    }}
-                                    className='me-2'
-                                  >
-                                    <Image
-                                      src={unverifyicon}
-                                      alt='founder image'
-                                      fill
-                                      style={{ height: '100%', width: '100%' }}
-                                    />
-                                  </div>
-                                ) : (
-                                  // <i className='fa fa-circle-check fs-5 me-2'/>
-                                  <div
-                                    style={{
-                                      aspectRatio: profileAspect,
-                                      position: 'relative',
-                                      height: '20px',
-                                    }}
-                                    className='me-2'
-                                  >
-                                    <Image
-                                      src={verifyicon}
-                                      alt='founder image'
-                                      fill
-                                      style={{ height: '100%', width: '100%' }}
-                                    />{' '}
-                                  </div>
-                                )}
-                                <strong>{Object.keys(directory[0].status).toString() ==
-                                'un_verfied'
-                                  ? t('Unverified')
-                                  : t('Verified')}
-                              </strong></a>
-                            </li>
-                          )}
-                        </ul>
+                       
                         <p>
                           {directory.length != 0
                             ? directory[0].shortDescription
@@ -675,22 +657,7 @@ export default function Web3DirectoryDetail({
                             directory[0].companyUrl[0].length != 0 ? (
                               <>
                               
-                              <li>
-                                  <Link
-              href="#"
-              className="reg-btn small yellow dark"
-              onClick={(e) => {
-                e.preventDefault();
-                handleShowContactModal();
-              }}
-            >
-               {t('Book Your Meeting Now')}{' '}
-            </Link>
-            <DirectoryModelPopup show={showContactModal} handleClose={handleCloseContactModal}  companyName={directory[0]?.company} />
-
-
-                          
-                              </li>
+                              
                               </>
                             ) : (
                               ''
@@ -700,6 +667,7 @@ export default function Web3DirectoryDetail({
                           )}
                           
                         </ul>
+                        <DirectoryModelPopup show={showContactModal} handleClose={handleCloseContactModal}  companyName={directory[0]?.company} />
                       </div>
                       {/* <div>
             
@@ -748,7 +716,47 @@ export default function Web3DirectoryDetail({
                         minHeight: '256px',
                       }}
                     >
-                      <ul className='faq-btn-list'>
+                      
+
+<div className="text-center p-4 shadow-sm rounded border bg-white box-spacing">
+  <h5 className="fw-bold mb-3">{t("Is this your project?")}</h5>
+  <a
+    href="mailto:support@blockza.io?subject=Request%20Edits&body=Hello%20Blockza%20Support%2C%0A%0AI%20would%20like%20to%20request%20edits%20to%20my%20project.%0A%0APlease%20provide%20further%20instructions.%0A%0AThank%20you."
+    className="btn btn-primary px-4 py-2 fw-bold"
+    style={{
+      background: "linear-gradient(90deg, #007BFF 0%, #00C6FF 100%)",
+      color: "#fff",
+      border: "none",
+    }}
+  >
+    {t("Request edits")}
+  </a>
+</div>
+
+<div className="text-center p-4 shadow-sm rounded border bg-white box-spacing">
+  <h5 className="fw-bold mb-3">{t("Arrange your meeting with WEB3 experts.")}</h5>
+  <Link
+    href="#"
+    className="btn btn-outline-primary px-4 py-2 fw-bold "
+    onClick={(e) => {
+      e.preventDefault();
+      handleShowContactModal();
+    }}
+    style={{
+      border: "2px solid #007BFF",
+      borderRadius: "8px",
+      color: "#007BFF",
+      backgroundColor: "transparent",
+      textDecoration: "none",
+    }}
+   
+  >
+    {t("Book Your Meeting")}
+  </Link>
+</div>
+
+
+                     {/* <ul className='faq-btn-list'>
                         <li>
                           <Link href={CONTACT_US} className='reg-btn faq-btn'>
                             {t('FAQ')}
@@ -770,15 +778,7 @@ export default function Web3DirectoryDetail({
                                 <i className='fa fa-angle-right' />
                               )}
                             </Dropdown.Toggle>
-                            {/* 
-                      <Dropdown.Menu>
-                        <Dropdown.Item href='#/action-1'>
-                          Trending
-                        </Dropdown.Item>
-                        <Dropdown.Item href='#/action-2'>
-                          Trending
-                        </Dropdown.Item>
-                      </Dropdown.Menu> */}
+                   
                           </Dropdown>
                         </li>
                       </ul>
@@ -798,24 +798,36 @@ export default function Web3DirectoryDetail({
                             {t('Search for Company')}
                           </Link>
                         </li>
-                      </ul>
-                      <Link
-                        // onClick={(e: any) => addcompanyfn(e)}
-                        href={ADD_WEB3}
-                        style={{
-                          display: hideMyContent ? 'inline-block' : 'none',
-                        }}
-                        className='reg-btn trans submit-listing'
-                      >
-                        {t('Submit your Listing')}
-                      </Link>
+                      </ul> */}
+                    <div
+  className="text-center p-4 shadow-sm rounded border bg-white box-spacing"
+>
+  <h5 className="fw-bold mb-3">{t("Submit your Listing")}</h5>
+  <Link
+    href="/add-directory/"
+    className="btn px-4 py-2 fw-bold"
+    style={{
+      background: "linear-gradient(90deg, #007BFF 0%, #00C6FF 100%)",
+      color: "#fff",
+      border: "none",
+      borderRadius: "6px",
+      fontSize: "16px",
+      textDecoration: "none",
+    }}
+  >
+    {t("Submit your Listing")}
+  </Link>
+</div>
+
+
+
                       {!isLoading && (
             
             <div className='premium_company mt-2'>
               <div className='' />
               <div className=''>
-                    <h3 className='text-primary'>
-                      <Image  style={{ marginRight: "0px", maxWidth: "35px" }}  src={tag} alt='Bard' /> {t('Trending')}{' '}
+                    <h3 title="Trending section shows the most popular content and users" className='text-primary'>
+                      <Image  style={{ marginRight: "0px", maxWidth: "35px" }}  src={tag} alt='Bard' /> {t('Trending')}{' '} <span className='ps-1'><Info size={20} /></span>
                     </h3>
                     <div className='spacer-10' />
 

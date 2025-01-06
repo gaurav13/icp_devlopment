@@ -132,4 +132,15 @@
     color: #333;
     margin-top: 10px;
   }
+  .circular-socialicon {
+    width: 25px; /* Adjust as needed */
+    height: 25px;
+    border-radius: 50%; /* Makes it circular */
+    background-color: #fff; /* Light background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    border: 2px solid #1e5fb3; /* Border with same color as icon */
+  }
   
